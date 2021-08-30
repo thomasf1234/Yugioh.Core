@@ -602,16 +602,6 @@ namespace Yugioh.Draw.Builders
             return this;
         }
 
-        /*public CardBuilder AddMonsterDescription(string description, Brush brush, bool useItallic)
-        {
-            string fontFamilyName = useItallic ? "Yu-Gi-Oh! StoneSerif LT" : "Yu-Gi-Oh! Matrix Book";
-            var targetRect = new RectangleF(65, 936, 700, 154);
-
-            AddDescription(description, fontFamilyName, brush, targetRect);
-
-            return this;
-        }*/
-
         public CardBuilder AddPendulumDescription(string description, Brush brush)
         {
             string fontFamilyName = "Yu-Gi-Oh! Matrix Book";
@@ -621,16 +611,6 @@ namespace Yugioh.Draw.Builders
 
             return this;
         }
-
-       /* public CardBuilder AddNonMonsterDescription(string description, Brush brush)
-        {
-            string fontFamilyName = "Yu-Gi-Oh! Matrix Book";
-            var targetRect = new RectangleF(62, 904, 703, 225);
-
-            AddDescription(description, fontFamilyName, brush, targetRect);
-
-            return this;
-        }*/
 
         private void AddCardFrame(Frame frame)
         {
