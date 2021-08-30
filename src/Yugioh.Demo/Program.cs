@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using Yugioh.Draw.Builders;
@@ -177,7 +178,7 @@ namespace Yugioh.Demo
             new CardBuilder(resourceRepository, Frame.Xyz,
                 @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__NEO_GALAXY_EYES_PHOTON_DRAGON_001.png")
                 .AddAttribute(Attribute.Light)
-                .AddName("Neo Galaxy-Eyes Photon Dragon", Brushes.Gold)
+                .AddName("Neo Galaxy-Eyes Photon Dragon", new LinearGradientBrush(Point.Empty, new Point(100, 100), Color.Gold, Color.White))
                 .AddRank(Rank.Eight)
                 .AddNumber("BLLR-EN064", Brushes.White)
                 .AddMonsterType(new List<string>() { "Dragon", "Xyz", "Effect" })
