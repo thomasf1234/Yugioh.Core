@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
+using System.Reflection;
+using System.Resources;
 using Yugioh.Draw.Repositories;
 using Yugioh.Draw.Utils;
 
@@ -47,7 +51,7 @@ namespace Yugioh.Draw.Builders
         Xyz
     }
 
-    public enum Attribute
+    /*public enum Attribute
     {
         Dark,
         DarkDivine,
@@ -62,6 +66,20 @@ namespace Yugioh.Draw.Builders
         TrapSpell,
         Water,
         Wind
+    }*/
+
+    public enum Attribute
+    {
+        Dark = 0,
+        Divine = 1,
+        Earth = 2,
+        Fire = 3,
+        Light = 4,
+        Water = 5,
+        Wind = 6,
+        Laugh = 7,
+        Spell = 8,
+        Trap = 9
     }
 
     public enum Level
@@ -131,27 +149,28 @@ namespace Yugioh.Draw.Builders
         Thirteen = 13
     }
 
-    public enum LinkArrow
+    [Flags]
+    public enum LinkArrows : byte
     {
-        TopLeft,
-        Top,
-        TopRight,
-        Right,
-        BottomRight,
-        Bottom,
-        BottomLeft,
-        Left
+        TopLeft = 0b_00000001,
+        Top = 0b_00000010,
+        TopRight = 0b_00000100,
+        Right = 0b_00001000,
+        BottomRight = 0b_00010000,
+        Bottom = 0b_00100000,
+        BottomLeft = 0b_01000000,
+        Left = 0b_10000000,
     }
 
     public enum Property
     {
-        Continuous,
-        Counter,
-        Equip,
-        Field,
-        Normal,
-        QuickPlay,
-        Ritual
+        Normal = 0,
+        Continuous = 1,
+        Equip = 2,
+        Field = 3,
+        Quick_Play = 4,
+        Ritual = 5,
+        Counter = 6,
     }
 
     public enum Edition
@@ -188,7 +207,7 @@ namespace Yugioh.Draw.Builders
         private readonly bool _isPendulumMonster;
         private readonly bool _isLinkMonster;
 
-        public CardBuilder(IResourceRepository resourceRepository, Frame frame, string artworkPath)
+        public CardBuilder(IResourceRepository resourceRepository, Frame frame, Image artworkImage)
         {
             _resourceRepository = resourceRepository;
 
@@ -254,7 +273,7 @@ namespace Yugioh.Draw.Builders
             b = new Bitmap(826, 1204);
             g = ImageUtil.GetGraphics(b);
             g.Clear(Color.White);        
-            AddArtwork(artworkPath);
+            AddArtwork(artworkImage);
             AddCardFrame(frame);
         }
 
@@ -291,13 +310,12 @@ namespace Yugioh.Draw.Builders
 
         public CardBuilder AddLevel(Level level)
         {
-            int levelEndX = 685;
+            int levelEndX = level == Level.Thirteen ? 710 : 685;
             int levelStartY = 147;
             int levelWidth = 51;
             int levelHeight = 51;
             int levelMarginX = 3;
 
-            // TODO : Add LV13
             if ((int)level > 0)
             {
                 Image levelImage = _resourceRepository.GetImage("LEVEL__STAR");
@@ -322,9 +340,7 @@ namespace Yugioh.Draw.Builders
 
         public CardBuilder AddRank(Rank rank)
         {
-            // TODO : Add Rank 13
-
-            int rankStartX = 91;
+            int rankStartX = rank == Rank.Thirteen ? 66 : 91;
             int rankStartY = 147;
             int rankWidth = 51;
             int rankHeight = 51;
@@ -461,41 +477,54 @@ namespace Yugioh.Draw.Builders
             return this;
         }
 
-        public CardBuilder AddLinkArrows(List<LinkArrow> linkArrows)
+        public CardBuilder AddLinkArrows(LinkArrows linkArrows)
         {
-            foreach (LinkArrow linkArrow in linkArrows)
+            if (linkArrows.HasFlag(LinkArrows.TopLeft))
             {
-                Image linkArrowImage = _resourceRepository.GetImage($"LINK_ARROW__{StringUtil.ToUnderscoreUpperCase(linkArrow.ToString())}");
+                Image linkArrowImage = _resourceRepository.GetImage($"LINK_ARROW__{StringUtil.ToUnderscoreUpperCase(LinkArrows.TopLeft.ToString())}");
+                g.DrawImage(linkArrowImage, 71, 190, linkArrowImage.Width, linkArrowImage.Height);
+            }
 
-                switch (linkArrow)
-                {
-                    case LinkArrow.TopLeft:
-                        g.DrawImage(linkArrowImage, 71, 190, linkArrowImage.Width, linkArrowImage.Height);
-                        break;
-                    case LinkArrow.Top:
-                        g.DrawImage(linkArrowImage, 320, 176, linkArrowImage.Width, linkArrowImage.Height);
-                        break;
-                    case LinkArrow.TopRight:
-                        g.DrawImage(linkArrowImage, 679, 190, linkArrowImage.Width, linkArrowImage.Height);
-                        break;
-                    case LinkArrow.Right:
-                        g.DrawImage(linkArrowImage, 729, 439, linkArrowImage.Width, linkArrowImage.Height);
-                        break;
-                    case LinkArrow.BottomRight:
-                        g.DrawImage(linkArrowImage, 679, 799, linkArrowImage.Width, linkArrowImage.Height);
-                        break;
-                    case LinkArrow.Bottom:
-                        g.DrawImage(linkArrowImage, 320, 849, linkArrowImage.Width, linkArrowImage.Height);
-                        break;
-                    case LinkArrow.BottomLeft:
-                        g.DrawImage(linkArrowImage, 71, 800, linkArrowImage.Width, linkArrowImage.Height);
-                        break;
-                    case LinkArrow.Left:
-                        g.DrawImage(linkArrowImage, 56, 438, linkArrowImage.Width, linkArrowImage.Height);
-                        break;
-                    default:
-                        break;
-                }
+            if (linkArrows.HasFlag(LinkArrows.Top))
+            {
+                Image linkArrowImage = _resourceRepository.GetImage($"LINK_ARROW__{StringUtil.ToUnderscoreUpperCase(LinkArrows.Top.ToString())}");
+                g.DrawImage(linkArrowImage, 320, 176, linkArrowImage.Width, linkArrowImage.Height);
+            }
+
+            if (linkArrows.HasFlag(LinkArrows.TopRight))
+            {
+                Image linkArrowImage = _resourceRepository.GetImage($"LINK_ARROW__{StringUtil.ToUnderscoreUpperCase(LinkArrows.TopRight.ToString())}");
+                g.DrawImage(linkArrowImage, 679, 190, linkArrowImage.Width, linkArrowImage.Height);
+            }
+
+            if (linkArrows.HasFlag(LinkArrows.Right))
+            {
+                Image linkArrowImage = _resourceRepository.GetImage($"LINK_ARROW__{StringUtil.ToUnderscoreUpperCase(LinkArrows.Right.ToString())}");
+                g.DrawImage(linkArrowImage, 729, 439, linkArrowImage.Width, linkArrowImage.Height);
+            }
+
+            if (linkArrows.HasFlag(LinkArrows.BottomRight))
+            {
+                Image linkArrowImage = _resourceRepository.GetImage($"LINK_ARROW__{StringUtil.ToUnderscoreUpperCase(LinkArrows.BottomRight.ToString())}");
+                g.DrawImage(linkArrowImage, 679, 799, linkArrowImage.Width, linkArrowImage.Height);
+            }
+
+            if (linkArrows.HasFlag(LinkArrows.Bottom))
+            {
+                Image linkArrowImage = _resourceRepository.GetImage($"LINK_ARROW__{StringUtil.ToUnderscoreUpperCase(LinkArrows.Bottom.ToString())}");
+                g.DrawImage(linkArrowImage, 320, 849, linkArrowImage.Width, linkArrowImage.Height);
+            }
+
+            if (linkArrows.HasFlag(LinkArrows.BottomLeft))
+            {
+                Image linkArrowImage = _resourceRepository.GetImage($"LINK_ARROW__{StringUtil.ToUnderscoreUpperCase(LinkArrows.BottomLeft.ToString())}");
+                g.DrawImage(linkArrowImage, 71, 800, linkArrowImage.Width, linkArrowImage.Height);
+            }
+
+            if (linkArrows.HasFlag(LinkArrows.Left))
+            {
+                Image linkArrowImage = _resourceRepository.GetImage($"LINK_ARROW__{StringUtil.ToUnderscoreUpperCase(LinkArrows.Left.ToString())}");
+                g.DrawImage(linkArrowImage, 56, 438, linkArrowImage.Width, linkArrowImage.Height);
             }
 
             return this;
@@ -524,6 +553,10 @@ namespace Yugioh.Draw.Builders
 
         public CardBuilder AddPasscode(string passcode, Brush brush)
         {
+            // Cannot draw greater than 8
+            if (passcode.Length != 8)
+                return this;
+
             int fontHeight = 17;
             FontFamily fontFamily = _resourceRepository.GetFontFamily("StoneSerif LT");
             Font font = new Font(fontFamily, fontHeight);
@@ -619,13 +652,14 @@ namespace Yugioh.Draw.Builders
             g.DrawImage(frameImage, 0, 0, b.Width, b.Height);
         }
 
-        private void AddArtwork(string imagePath)
+        private void AddArtwork(Image artworkImage)
         {
-            var artworkImage = Image.FromFile(imagePath);
-
             if (_isPendulumMonster)
             {
-                g.DrawImage(artworkImage, 55, 213, 717, 717);
+                int width = 717;
+                double scaleFactor = ((double)width) / artworkImage.Width;
+                int height = (int)(artworkImage.Height * scaleFactor);
+                g.DrawImage(artworkImage, 55, 213, width, height);
             }
             else
             {
@@ -769,7 +803,7 @@ namespace Yugioh.Draw.Builders
             float indent, float paragraphSpacing)
         {
             // Split the text into paragraphs.
-            string[] paragraphs = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            string[] paragraphs = text.Replace("\r\n", "\n").Split(new[] { "\n" }, StringSplitOptions.None);
             float defaultFontHeight = 18;
             float fontHeight = defaultFontHeight;
             List<List<string>> paragraphLines = new List<List<string>>();

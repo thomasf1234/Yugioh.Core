@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ATKDEF_BAR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATKDEF_BAR.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATTRIBUTE__DARK" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATTRIBUTE__DARK.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATTRIBUTE__DARKDIVINE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATTRIBUTE__DARKDIVINE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATTRIBUTE__DIVINE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATTRIBUTE__DIVINE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATTRIBUTE__EARTH" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATTRIBUTE__EARTH.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATTRIBUTE__FIRE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATTRIBUTE__FIRE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATTRIBUTE__LAUGH" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATTRIBUTE__LAUGH.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATTRIBUTE__LIGHT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATTRIBUTE__LIGHT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATTRIBUTE__SPELL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATTRIBUTE__SPELL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATTRIBUTE__START" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATTRIBUTE__START.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATTRIBUTE__TRAP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATTRIBUTE__TRAP.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATTRIBUTE__TRAPSPELL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATTRIBUTE__TRAPSPELL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATTRIBUTE__WATER" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATTRIBUTE__WATER.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATTRIBUTE__WIND" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\ATTRIBUTE__WIND.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BACK__DEFAULT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\BACK__DEFAULT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EYE_OF_ANUBIS_HOLOGRAM__GOLD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\EYE_OF_ANUBIS_HOLOGRAM__GOLD.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EYE_OF_ANUBIS_HOLOGRAM__SILVER" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\EYE_OF_ANUBIS_HOLOGRAM__SILVER.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_DARK_SYNCHRO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_DARK_SYNCHRO.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_EFFECT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_EFFECT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_EGYPTIAN_GOD_BLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_EGYPTIAN_GOD_BLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_EGYPTIAN_GOD_RED" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_EGYPTIAN_GOD_RED.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_EGYPTIAN_GOD_YELLOW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_EGYPTIAN_GOD_YELLOW.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_FUSION" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_FUSION.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_NORMAL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_NORMAL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_RITUAL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_RITUAL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_SACRED_BEAST_BLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_SACRED_BEAST_BLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_SACRED_BEAST_RED" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_SACRED_BEAST_RED.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_SACRED_BEAST_YELLOW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_SACRED_BEAST_YELLOW.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_SPELL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_SPELL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_SYNCHRO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_SYNCHRO.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_TOKEN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_TOKEN.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_TRAP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_TRAP.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_WICKED_GOD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_WICKED_GOD.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__ANIME_XYZ" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__ANIME_XYZ.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__DARK_SYNCHRO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__DARK_SYNCHRO.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__EFFECT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__EFFECT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__EGYPTIAN_GOD_BLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__EGYPTIAN_GOD_BLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__EGYPTIAN_GOD_RED" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__EGYPTIAN_GOD_RED.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__EGYPTIAN_GOD_YELLOW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__EGYPTIAN_GOD_YELLOW.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__FUSION" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__FUSION.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__LEGENDARY_DRAGON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__LEGENDARY_DRAGON.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__LINK" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__LINK.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__NORMAL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__NORMAL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_DARK_SYNCHRO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_DARK_SYNCHRO.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_EFFECT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_EFFECT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_EGYPTIAN_GOD_BLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_EGYPTIAN_GOD_BLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_EGYPTIAN_GOD_RED" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_EGYPTIAN_GOD_RED.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_EGYPTIAN_GOD_YELLOW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_EGYPTIAN_GOD_YELLOW.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_FUSION" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_FUSION.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_NORMAL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_NORMAL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_RITUAL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_RITUAL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_SACRED_BEAST_BLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_SACRED_BEAST_BLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_SACRED_BEAST_RED" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_SACRED_BEAST_RED.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_SACRED_BEAST_YELLOW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_SACRED_BEAST_YELLOW.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_SPELL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_SPELL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_SYNCHRO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_SYNCHRO.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_TOKEN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_TOKEN.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_TRAP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_TRAP.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_WICKED_BEAST" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_WICKED_BEAST.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__PENDULUM_XYZ" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__PENDULUM_XYZ.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__RITUAL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__RITUAL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__SACRED_BEAST_BLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__SACRED_BEAST_BLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__SACRED_BEAST_RED" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__SACRED_BEAST_RED.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__SACRED_BEAST_YELLOW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__SACRED_BEAST_YELLOW.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__SPELL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__SPELL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__SYNCHRO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__SYNCHRO.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__TOKEN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__TOKEN.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__TRAP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__TRAP.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__WICKED_GOD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__WICKED_GOD.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FRAME__XYZ" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\FRAME__XYZ.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LEVEL__NEGATIVE_STAR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\LEVEL__NEGATIVE_STAR.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LEVEL__STAR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\LEVEL__STAR.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LINK_ARROW__BOTTOM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\LINK_ARROW__BOTTOM.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LINK_ARROW__BOTTOM_LEFT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\LINK_ARROW__BOTTOM_LEFT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LINK_ARROW__BOTTOM_RIGHT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\LINK_ARROW__BOTTOM_RIGHT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LINK_ARROW__LEFT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\LINK_ARROW__LEFT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LINK_ARROW__RIGHT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\LINK_ARROW__RIGHT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LINK_ARROW__TOP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\LINK_ARROW__TOP.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LINK_ARROW__TOP_LEFT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\LINK_ARROW__TOP_LEFT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LINK_ARROW__TOP_RIGHT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\LINK_ARROW__TOP_RIGHT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PENDULUM__SCALE_BLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\PENDULUM__SCALE_BLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PENDULUM__SCALE_RED" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\PENDULUM__SCALE_RED.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PROPERTY__CONTINUOUS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\PROPERTY__CONTINUOUS.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PROPERTY__COUNTER" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\PROPERTY__COUNTER.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PROPERTY__EQUIP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\PROPERTY__EQUIP.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PROPERTY__FIELD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\PROPERTY__FIELD.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PROPERTY__NORMAL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\PROPERTY__NORMAL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PROPERTY__QUICK_PLAY" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\PROPERTY__QUICK_PLAY.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PROPERTY__RITUAL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\PROPERTY__RITUAL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RANK__STAR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\RANK__STAR.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

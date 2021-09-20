@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yugioh.Demo", "Yugioh.Demo.csproj", "{A6DBDA0B-41A4-4B6A-BD11-8BB4DF6D4B9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yugioh.Draw", "..\Yugioh.Draw\Yugioh.Draw.csproj", "{8135ED25-69B1-4AB6-860B-D3CF6F6AC193}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yugioh.Draw", "..\Yugioh.Draw\Yugioh.Draw.csproj", "{8135ED25-69B1-4AB6-860B-D3CF6F6AC193}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yugioh.Data", "..\Yugioh.Data\Yugioh.Data.csproj", "{894A24BE-33D3-4515-A084-AA187E94886C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yugioh.Sync", "..\Yugioh.Sync\Yugioh.Sync.csproj", "{07F04F78-1198-452F-934F-71EA1B629930}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{8135ED25-69B1-4AB6-860B-D3CF6F6AC193}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8135ED25-69B1-4AB6-860B-D3CF6F6AC193}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8135ED25-69B1-4AB6-860B-D3CF6F6AC193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{894A24BE-33D3-4515-A084-AA187E94886C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{894A24BE-33D3-4515-A084-AA187E94886C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{894A24BE-33D3-4515-A084-AA187E94886C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{894A24BE-33D3-4515-A084-AA187E94886C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07F04F78-1198-452F-934F-71EA1B629930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07F04F78-1198-452F-934F-71EA1B629930}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07F04F78-1198-452F-934F-71EA1B629930}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07F04F78-1198-452F-934F-71EA1B629930}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

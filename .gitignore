@@ -290,3 +290,6 @@ __pycache__/
 *.xsd.cs
 
 ARTWORK_*
+src/Yugioh.Sync/Cache
+src/Yugioh.Sync/bin
+src/Yugioh.Sync/*.sqlite

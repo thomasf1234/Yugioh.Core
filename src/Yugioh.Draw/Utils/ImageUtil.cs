@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Text;
+using System.IO;
 
 namespace Yugioh.Draw.Utils
 {
@@ -213,6 +214,23 @@ namespace Yugioh.Draw.Utils
             {
                 g.DrawImage(b, -r.X, -r.Y);
                 return nb;
+            }
+        }
+
+        public static byte[] ToBytes(Image image)
+        {
+            using (var mStream = new MemoryStream())
+            {
+                image.Save(mStream, image.RawFormat);
+                return mStream.ToArray();
+            }
+        }
+
+        public static Image FromBytes(byte[] imageBytes)
+        {
+            using (var mStream = new MemoryStream(imageBytes))
+            {
+                return Image.FromStream(mStream);
             }
         }
     }

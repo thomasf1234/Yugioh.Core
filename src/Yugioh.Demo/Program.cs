@@ -1,8 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Data.Sqlite;
+using Serilog;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Threading.Tasks;
+//using Yugioh.Data.Repositories;
 using Yugioh.Draw.Builders;
 using Yugioh.Draw.Repositories;
 
@@ -10,18 +15,73 @@ namespace Yugioh.Demo
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            string resourcesPath = Path.GetFullPath(@"..\..\..\..\resources");
+            /*string resourcesPath = Path.GetFullPath(@"..\..\..\..\resources");
             if (!Directory.Exists(resourcesPath))
             {
                 throw new FileNotFoundException($"Resources directory not found at {resourcesPath}");
             }
 
-            IResourceRepository resourceRepository = new ResourceRepository(resourcesPath);
+            IResourceRepository resourceRepository = new ResourceRepository(resourcesPath);*/
 
-            new CardBuilder(resourceRepository, Frame.Normal,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__DARK_MAGICIAN_001.png")
+
+
+            Log.Logger = new LoggerConfiguration()
+                //.WriteTo.File("consoleapp.log")
+                //.WriteTo.Console()
+                .CreateLogger();
+
+            string dataProjectPath = Path.GetFullPath("../../../Yugioh.Data");
+            string dbPath = Path.Combine(dataProjectPath, "Yugioh.sqlite");
+
+            /*using (var connection = new SqliteConnection($"Data Source={dbPath}"))
+            {
+                connection.Open();
+
+                var cardRepository = new CardRepository();
+
+                var dogma = await cardRepository.FindCardAsync(17132130, connection);
+
+                new CardBuilder(resourceRepository, Frame.Effect,
+                $@"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\{dogma.CardId}.jpg")
+                .AddAttribute((Draw.Builders.Attribute)dogma.Attribute)
+                .AddName(dogma.Name, Brushes.Black)
+                .AddLevel((Draw.Builders.Level)dogma.Level)
+                //.AddNumber("DUSA-EN053", Brushes.Black)
+                .AddMonsterType(dogma.GetDisplayedTypes())
+                .AddDescription(dogma.Description, Brushes.Black)
+                .AddAtkAndDef(dogma.Attack, dogma.Defense, Brushes.Black)
+                .AddPasscode(dogma.Passcode, Brushes.Black)
+                .AddEditionAndHologram(Edition.First, Brushes.Black)
+                .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                .Build()
+                .Save($"EXAMPLE__{dogma.Name.ToUpper()}.png", ImageFormat.Png);
+
+                var dreadmaster = await cardRepository.FindCardAsync(40591390, connection);
+
+                new CardBuilder(resourceRepository, Frame.Effect,
+                $@"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\{dreadmaster.CardId}.jpg")
+                .AddAttribute((Draw.Builders.Attribute)dreadmaster.Attribute)
+                .AddName(dreadmaster.Name, Brushes.Black)
+                .AddLevel((Draw.Builders.Level)dreadmaster.Level)
+                //.AddNumber("DUSA-EN053", Brushes.Black)
+                .AddMonsterType(dreadmaster.GetDisplayedTypes())
+                .AddDescription(dreadmaster.Description, Brushes.Black)
+                .AddAtkAndDef(dreadmaster.Attack, dreadmaster.Defense, Brushes.Black)
+                .AddPasscode(dreadmaster.Passcode, Brushes.Black)
+                .AddEditionAndHologram(Edition.First, Brushes.Black)
+                .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                .Build()
+                .Save($"EXAMPLE__{dreadmaster.Name.ToUpper()}.png", ImageFormat.Png);
+            }
+*/
+
+
+
+
+                /*new CardBuilder(resourceRepository, Frame.Normal,
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Dark)
                 .AddName("Dark Magician", Brushes.Black)
                 .AddLevel(Level.Seven)
@@ -36,7 +96,7 @@ namespace Yugioh.Demo
                 .Save($"EXAMPLE__DARK_MAGICIAN.png", ImageFormat.Png);
 
             new CardBuilder(resourceRepository, Frame.Normal,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__BLUE_EYES_WHITE_DRAGON_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Light)
                 .AddName("Blue-Eyes White Dragon", Brushes.Black)
                 .AddLevel(Level.Eight)
@@ -51,7 +111,7 @@ namespace Yugioh.Demo
                 .Save($"EXAMPLE__BLUE_EYES_WHITE_DRAGON.png", ImageFormat.Png);
 
             new CardBuilder(resourceRepository, Frame.Normal,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__GUNKAN_SUSHIP_SHARI_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Fire)
                 .AddName("Gunkan Suship Shari", Brushes.Black)
                 .AddLevel(Level.Four)
@@ -66,7 +126,7 @@ namespace Yugioh.Demo
                 .Save($"EXAMPLE__GUNKAN_SUSHIP_SHARI.png", ImageFormat.Png);
 
             new CardBuilder(resourceRepository, Frame.Effect,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__BLACK_LUSTER_SOLDIER_ENVOY_OF_THE_BEGINNING_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Light)
                 .AddName("Black Luster Soldier - Envoy of the Beginning", Brushes.Black)
                 .AddLevel(Level.Eight)
@@ -81,8 +141,8 @@ namespace Yugioh.Demo
                 .Save($"EXAMPLE__BLACK_LUSTER_SOLDIER_ENVOY_OF_THE_BEGINNING.png", ImageFormat.Png);
 
             new CardBuilder(resourceRepository, 
-                Frame.Effect,  
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__RAVIEL_LORD_OF_PHANTASMS_001.png")
+                Frame.Effect,
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Dark)
                 .AddName("Raviel, Lord of Phantasms", Brushes.Black)
                 .AddLevel(Level.Ten)
@@ -98,7 +158,7 @@ namespace Yugioh.Demo
 
             new CardBuilder(resourceRepository,
                 Frame.Effect,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__DESTINY_HERO_PLASMA_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Dark)
                 .AddName("Destiny HERO - Plasma", Brushes.Black)
                 .AddLevel(Level.Eight)
@@ -114,7 +174,7 @@ namespace Yugioh.Demo
 
             new CardBuilder(resourceRepository, 
                 Frame.Ritual,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__RELINQUISHED_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Dark)
                 .AddName("Relinquished", Brushes.Black)
                 .AddLevel(Level.One)
@@ -130,7 +190,7 @@ namespace Yugioh.Demo
 
             new CardBuilder(resourceRepository, 
                 Frame.Fusion,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__EVIL_HERO_DARK_GAIA_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Earth)
                 .AddName("Evil HERO Dark Gaia", Brushes.Black)
                 .AddLevel(Level.Eight)
@@ -145,7 +205,7 @@ namespace Yugioh.Demo
                 .Save($"EXAMPLE__EVIL_HERO_DARK_GAIA.png", ImageFormat.Png);
 
             new CardBuilder(resourceRepository, Frame.Synchro,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__STARDUST_DRAGON_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Wind)
                 .AddName("Stardust Dragon", Brushes.Black)
                 .AddLevel(Level.Eight)
@@ -161,7 +221,7 @@ namespace Yugioh.Demo
 
             new CardBuilder(resourceRepository, 
                 Frame.DarkSynchro,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__HUNDRED_EYES_DRAGON_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Dark)
                 .AddName("Hundred Eyes Dragon", Brushes.White)
                 .AddLevel(Level.MinusEight)
@@ -176,7 +236,7 @@ namespace Yugioh.Demo
                 .Save($"EXAMPLE__HUNDRED_EYES_DRAGON.png", ImageFormat.Png);
 
             new CardBuilder(resourceRepository, Frame.Xyz,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__NEO_GALAXY_EYES_PHOTON_DRAGON_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Light)
                 .AddName("Neo Galaxy-Eyes Photon Dragon", new LinearGradientBrush(Point.Empty, new Point(100, 100), Color.Gold, Color.White))
                 .AddRank(Rank.Eight)
@@ -191,8 +251,8 @@ namespace Yugioh.Demo
                 .Save($"EXAMPLE__NEO_GALAXY_EYES_PHOTON_DRAGON.png", ImageFormat.Png);
 
             new CardBuilder(resourceRepository,
-                Frame.PendulumEffect, 
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__ODD_EYES_PENDULUM_DRAGON_001.png")
+                Frame.PendulumEffect,
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Dark)
                 .AddName("Odd-Eyes Pendulum Dragon", Brushes.Black)
                 .AddLevel(Level.Seven)
@@ -210,7 +270,7 @@ namespace Yugioh.Demo
 
             new CardBuilder(resourceRepository,
                 Frame.PendulumNormal,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__DRAGONPULSE_MAGICIAN_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Earth)
                 .AddName("Dragonpulse Magician", Brushes.Black)
                 .AddLevel(Level.Four)
@@ -228,7 +288,7 @@ namespace Yugioh.Demo
 
             new CardBuilder(resourceRepository,
                 Frame.PendulumFusion,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__DDD_SUPER_DOOM_KING_PURPLE_ARMAGEDDON_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Dark)
                 .AddName("D/D/D Super Doom King Purple Armageddon", Brushes.Black)
                 .AddLevel(Level.Ten)
@@ -246,13 +306,13 @@ namespace Yugioh.Demo
 
             new CardBuilder(resourceRepository,
                 Frame.Link,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__GAIA_SABER_THE_LIGHTNING_SHADOW_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Earth)
                 .AddName("Gaia Saber, the Lightning Shadow", Brushes.Black)
                 .AddNumber("BLRR-EN087", Brushes.Black)
                 .AddMonsterType(new List<string>() { "Machine", "Link" })
                 .AddDescription("2+ monsters", Brushes.Black)
-                .AddLinkArrows(new List<LinkArrow>() { LinkArrow.Left, LinkArrow.Right, LinkArrow.Bottom })
+                .AddLinkArrows(LinkArrows.Left | LinkArrows.Right | LinkArrows.Bottom)
                 .AddAtkAndLinkRating("2600", 3, Brushes.Black)
                 .AddPasscode("67598234", Brushes.Black)
                 .AddEditionAndHologram(Edition.First, Brushes.Black)
@@ -262,13 +322,13 @@ namespace Yugioh.Demo
 
             new CardBuilder(resourceRepository,
                 Frame.Link,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__FIREWALL_DRAGON_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Light)
                 .AddName("Firewall Dragon", Brushes.Black)
                 .AddNumber("GFTP-EN131", Brushes.Black)
                 .AddMonsterType(new List<string>() { "Cyberse", "Link", "Effect" })
                 .AddDescription("2+ monsters\r\nwhile face-up on the field (Quick Effect): You can target monsters on the field and/or GY up to the number of monsters co-linked to this card; return them to the hand. If a monster this card points to is destroyed by battle or sent to the GY: You can Special Summon 1 Cyberse monster from your hand. You can only use each effect of \"Firewall Dragon\" once per turn.", Brushes.Black)
-                .AddLinkArrows(new List<LinkArrow>() { LinkArrow.Left, LinkArrow.Top, LinkArrow.Right, LinkArrow.Bottom })
+                .AddLinkArrows(LinkArrows.Left | LinkArrows.Top | LinkArrows.Right | LinkArrows.Bottom)
                 .AddAtkAndLinkRating("2500", 4, Brushes.Black)
                 .AddPasscode("05043010", Brushes.Black)
                 .AddEditionAndHologram(Edition.First, Brushes.Black)
@@ -278,13 +338,13 @@ namespace Yugioh.Demo
 
             new CardBuilder(resourceRepository,
                 Frame.Link,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__KNIGHTMARE_PHOENIX_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Fire)
                 .AddName("Knightmare Phoenix", Brushes.Black)
                 .AddNumber("MP19-EN027", Brushes.Black)
                 .AddMonsterType(new List<string>() { "Fiend", "Link", "Effect" })
                 .AddDescription("2 monsters with different names\r\nIf this card is Link Summoned: You can discard 1 card, then target 1 Spell/Trap your opponent controls; destroy it, then, if this card was co-linked when this effect was activated, you can draw 1 card. You can only use this effect of \"Knightmare Phoenix\" once per turn. Co-linked monsters you control cannot be destroyed by battle.", Brushes.Black)
-                .AddLinkArrows(new List<LinkArrow>() { LinkArrow.Top, LinkArrow.Right })
+                .AddLinkArrows(LinkArrows.Top | LinkArrows.Right)
                 .AddAtkAndLinkRating("1900", 2, Brushes.Black)
                 .AddPasscode("02857636", Brushes.Black)
                 .AddEditionAndHologram(Edition.First, Brushes.Black)
@@ -294,10 +354,10 @@ namespace Yugioh.Demo
 
             new CardBuilder(resourceRepository,
                 Frame.Spell,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__DIMENSION_FUSION_DESTRUCTION_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Spell)
                 .AddName("Dimension Fusion Destruction", Brushes.Black)
-                .AddProperty(Property.QuickPlay)
+                .AddProperty(Property.Quick_Play)
                 .AddNumber("DP01-EN036", Brushes.Black)
                 .AddDescription("Banish from your hand, field, and/or GY, the Fusion Materials that are listed on a \"Phantasm\" Fusion Monster, then Special Summon that Fusion Monster from your Extra Deck, ignoring its Summoning conditions. You take no battle damage from attacks involving the monster Special Summoned by this effect. If you control \"Uria, Lord of Searing Flames\", \"Hamon, Lord of Striking Thunder\", or \"Raviel, Lord of Phantasms\", your opponent cannot activate cards or effects in response to this card's activation.", Brushes.Black)
                 .AddPasscode("67598234", Brushes.Black)
@@ -308,7 +368,7 @@ namespace Yugioh.Demo
 
             new CardBuilder(resourceRepository,
                 Frame.Trap,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__MIRROR_FORCE_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Trap)
                 .AddName("Mirror Force", Brushes.Black)
                 .AddProperty(Property.Normal)
@@ -321,7 +381,7 @@ namespace Yugioh.Demo
                 .Save($"EXAMPLE__MIRROR_FORCE.png", ImageFormat.Png);
 
             new CardBuilder(resourceRepository, Frame.EgyptianGodRed,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__SLIFER_THE_SKY_DRAGON_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Divine)
                 .AddName("Slifer the Sky Dragon", Brushes.Black)
                 .AddLevel(Level.Ten)
@@ -335,7 +395,7 @@ namespace Yugioh.Demo
                 .Save($"EXAMPLE__SLIFER_THE_SKY_DRAGON.png", ImageFormat.Png);
 
             new CardBuilder(resourceRepository, Frame.EgyptianGodBlue,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__OBELISK_THE_TORMENTOR_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Divine)
                 .AddName("Obelisk the Tormentor", Brushes.Black)
                 .AddLevel(Level.Ten)
@@ -349,7 +409,7 @@ namespace Yugioh.Demo
                 .Save($"EXAMPLE__OBELISK_THE_TORMENTOR.png", ImageFormat.Png);
 
             new CardBuilder(resourceRepository, Frame.EgyptianGodYellow,
-                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\resources\images\ARTWORK__THE_WINGED_DRAGON_OF_RA_001.png")
+                @"C:\Users\Admin\Documents\Projects\Yugioh.Draw\src\Yugioh.Data\Cache\Artworks\Formatted\46986414.jpg")
                 .AddAttribute(Attribute.Divine)
                 .AddName("The Winged Dragon of Ra", Brushes.Black)
                 .AddLevel(Level.Ten)
@@ -360,7 +420,7 @@ namespace Yugioh.Demo
                 .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
                 .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
                 .Build()
-                .Save($"EXAMPLE__THE_WINGED_DRAGON_OF_RA.png", ImageFormat.Png); 
+                .Save($"EXAMPLE__THE_WINGED_DRAGON_OF_RA.png", ImageFormat.Png); */
         }
     }
 }
