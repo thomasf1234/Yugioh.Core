@@ -5,7 +5,7 @@ Simple SQLite database and .NET core library to create high quality Yu-Gi-Oh car
 #### Sample image:
 
 <p align="center">
-  <img src="samples/LOB-001.jpg" width="413" height="602"/>
+  <img src="samples/LOB/LOB-001.jpg" width="413" height="602"/>
 <p>
 
 ### Usage
