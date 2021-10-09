@@ -93,7 +93,6 @@ namespace Yugioh.Data.Entities
         public string Defense { get; set; }
         public string Description { get; set; }
         public string PendulumDescription { get; set; }
-        public string Passcode { get; set; }
 
         public List<string> GetDisplayedTypes()
         {
@@ -118,7 +117,11 @@ namespace Yugioh.Data.Entities
                 }
 
                 var normalEffectTypes = monsterTypes & (Entities.MonsterTypes.Normal | Entities.MonsterTypes.Effect);
-                types.AddRange(normalEffectTypes.ToString().Split(',').Select(e => e.Trim()));
+                
+                if (normalEffectTypes > 0)
+                {
+                    types.AddRange(normalEffectTypes.ToString().Split(',').Select(e => e.Trim()));
+                }
             }
 
             return types;

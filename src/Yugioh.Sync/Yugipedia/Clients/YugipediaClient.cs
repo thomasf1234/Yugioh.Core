@@ -23,10 +23,10 @@ namespace Yugioh.Sync.Yugipedia.Clients
             _cachePath = cachePath;
         }
 
-        public async Task<CardEntity> GetCardAsync(string passcode)
+        public async Task<CardEntity> GetCardAsync(string identifier)
         {
-            var url = $"{BaseUrl}/wiki/{passcode}";
-            var filePath = Path.Combine(_cachePath, $"Yugipedia/{passcode}.html");
+            var url = $"{BaseUrl}/wiki/{identifier}";
+            var filePath = Path.Combine(_cachePath, $"Yugipedia/{identifier}.html");
 
             // Download file if we don't have it
             if (!File.Exists(filePath))
@@ -123,6 +123,14 @@ namespace Yugioh.Sync.Yugipedia.Clients
 
                         cardEntity.Atk = atk;
                         cardEntity.Link = link;
+                    }
+
+                    if (headerText == "Password")
+                    {
+                        var dataNode = row.SelectSingleNode(".//td");
+                        var dataText = HttpUtility.HtmlDecode(dataNode.InnerText).Trim().Replace(" ", "");
+                        var passcode = dataText;
+                        cardEntity.Passcode = passcode;
                     }
                 }
                 else if (cardDescriptionNode != null)

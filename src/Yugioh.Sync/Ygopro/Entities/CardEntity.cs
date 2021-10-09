@@ -37,6 +37,6 @@ namespace Yugioh.Sync.Ygopro.Entities
         [JsonProperty("card_images")]
         public List<CardImageEntity> CardImageEntities { get; set; }
         [JsonProperty("card_sets")]
-        public List<CardSetEntity> CardSetEntities { get; set; }
+        public List<CardSetInfoEntity> CardSetInfoEntities { get; set; }
     }
 }

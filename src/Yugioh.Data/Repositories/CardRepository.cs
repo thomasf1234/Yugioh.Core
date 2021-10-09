@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Yugioh.Data.Entities;
 using Yugioh.Data.Extensions;
@@ -8,7 +9,31 @@ namespace Yugioh.Data.Repositories
 {
     public class CardRepository : ICardRepository
     {
-        public async Task<CardEntity> FindCardAsync(int cardId, SqliteConnection connection)
+        public async Task<List<int>> AllCardIdsAsync(SqliteConnection connection, SqliteTransaction transaction)
+        {
+            string queryString =
+            $@"
+SELECT {nameof(CardEntity.CardId)}
+FROM Card;";
+
+            var cardIds = new List<int>();
+            using (var command = new SqliteCommand(queryString, connection, transaction))
+            {
+                using (SqliteDataReader reader = await command.ExecuteReaderAsync())
+                {
+                    while(await reader.ReadAsync())
+                    {
+                        int cardId = reader.GetInt32(0);
+
+                        cardIds.Add(cardId);
+                    }
+                }
+            }
+
+            return cardIds;
+        }
+
+        public async Task<CardEntity> FindCardAsync(int cardId, SqliteConnection connection, SqliteTransaction transaction)
         {
             string queryString =
             $@"
@@ -27,12 +52,11 @@ SELECT {nameof(CardEntity.Type)},
        {nameof(CardEntity.Abilities)},
        {nameof(CardEntity.Attack)},
        {nameof(CardEntity.Defense)},
-       {nameof(CardEntity.Description)},
-       {nameof(CardEntity.Passcode)}
+       {nameof(CardEntity.Description)}
 FROM Card 
 WHERE {nameof(CardEntity.CardId)} = @cardId;";
 
-            using (var command = new SqliteCommand(queryString, connection))
+            using (var command = new SqliteCommand(queryString, connection, transaction))
             {
                 command.Parameters.AddWithValue("@cardId", cardId);
 
@@ -56,7 +80,6 @@ WHERE {nameof(CardEntity.CardId)} = @cardId;";
                         string attack = reader[nameof(CardEntity.Attack)] == DBNull.Value ? null : reader.GetString(reader.GetOrdinal(nameof(CardEntity.Attack)));
                         string defense = reader[nameof(CardEntity.Defense)] == DBNull.Value ? null : reader.GetString(reader.GetOrdinal(nameof(CardEntity.Defense)));
                         string description = reader.GetString(reader.GetOrdinal(nameof(CardEntity.Description))).Replace("\n", Environment.NewLine);
-                        string passcode = reader[nameof(CardEntity.Passcode)] == DBNull.Value ? null : reader.GetString(reader.GetOrdinal(nameof(CardEntity.Passcode)));
 
                         return new CardEntity()
                         {
@@ -76,8 +99,7 @@ WHERE {nameof(CardEntity.CardId)} = @cardId;";
                             Abilities = abilities,
                             Attack = attack,
                             Defense = defense,
-                            Description = description,
-                            Passcode = passcode
+                            Description = description
                         };
                     }
                     else
@@ -88,10 +110,9 @@ WHERE {nameof(CardEntity.CardId)} = @cardId;";
             }
         }
 
-        public async Task InsertCardAsync(CardEntity cardEntity, SqliteConnection connection)
+        public async Task InsertCardAsync(CardEntity cardEntity, SqliteConnection connection, SqliteTransaction transaction)
         {            
-            var command = connection.CreateCommand();
-            command.CommandText =
+            string queryString =
             $@"
 INSERT INTO Card ({nameof(CardEntity.CardId)}, 
                   {nameof(CardEntity.Type)},
@@ -109,8 +130,7 @@ INSERT INTO Card ({nameof(CardEntity.CardId)},
                   {nameof(CardEntity.Abilities)},
                   {nameof(CardEntity.Attack)},
                   {nameof(CardEntity.Defense)},
-                  {nameof(CardEntity.Description)},
-                  {nameof(CardEntity.Passcode)}
+                  {nameof(CardEntity.Description)}
                   )
 VALUES (@cardId,
         @type,
@@ -128,35 +148,36 @@ VALUES (@cardId,
         @abilities,
         @attack,
         @defense,
-        @description,
-        @passcode);";
+        @description);";
 
-            command.Parameters.AddWithValue("@cardId", cardEntity.CardId);
-            command.Parameters.AddWithValue("@type", cardEntity.Type);
-            command.Parameters.AddWithValue("@name", cardEntity.Name);
-            command.Parameters.AddWithValue("@attribute", cardEntity.Attribute);
-            command.Parameters.AddWithNullableValue("@level", cardEntity.Level);
-            command.Parameters.AddWithNullableValue("@rank", cardEntity.Rank);
-            command.Parameters.AddWithNullableValue("@linkRating", cardEntity.LinkRating);
-            command.Parameters.AddWithNullableValue("@linkArrows", cardEntity.LinkArrows);
-            command.Parameters.AddWithNullableValue("@pendulumScale", cardEntity.PendulumScale);
-
-            if (cardEntity.PendulumDescription != null)
+            using (var command = new SqliteCommand(queryString, connection, transaction))
             {
-                cardEntity.PendulumDescription = cardEntity.PendulumDescription.Replace("\r\n", "\n");
+                command.Parameters.AddWithValue("@cardId", cardEntity.CardId);
+                command.Parameters.AddWithValue("@type", cardEntity.Type);
+                command.Parameters.AddWithValue("@name", cardEntity.Name);
+                command.Parameters.AddWithValue("@attribute", cardEntity.Attribute);
+                command.Parameters.AddWithNullableValue("@level", cardEntity.Level);
+                command.Parameters.AddWithNullableValue("@rank", cardEntity.Rank);
+                command.Parameters.AddWithNullableValue("@linkRating", cardEntity.LinkRating);
+                command.Parameters.AddWithNullableValue("@linkArrows", cardEntity.LinkArrows);
+                command.Parameters.AddWithNullableValue("@pendulumScale", cardEntity.PendulumScale);
+
+                if (cardEntity.PendulumDescription != null)
+                {
+                    cardEntity.PendulumDescription = cardEntity.PendulumDescription.Replace("\r\n", "\n");
+                }
+
+                command.Parameters.AddWithNullableValue("@pendulumDescription", cardEntity.PendulumDescription);
+                command.Parameters.AddWithNullableValue("@property", cardEntity.Property);
+                command.Parameters.AddWithNullableValue("@monsterTypes", cardEntity.MonsterTypes);
+                command.Parameters.AddWithNullableValue("@race", cardEntity.Race);
+                command.Parameters.AddWithNullableValue("@abilities", cardEntity.Abilities);
+                command.Parameters.AddWithNullableValue("@attack", cardEntity.Attack);
+                command.Parameters.AddWithNullableValue("@defense", cardEntity.Defense);
+                command.Parameters.AddWithValue("@description", cardEntity.Description.Replace("\r\n", "\n"));
+
+                await command.ExecuteNonQueryAsync();
             }
-
-            command.Parameters.AddWithNullableValue("@pendulumDescription", cardEntity.PendulumDescription);
-            command.Parameters.AddWithNullableValue("@property", cardEntity.Property);
-            command.Parameters.AddWithNullableValue("@monsterTypes", cardEntity.MonsterTypes);
-            command.Parameters.AddWithNullableValue("@race", cardEntity.Race);
-            command.Parameters.AddWithNullableValue("@abilities", cardEntity.Abilities);
-            command.Parameters.AddWithNullableValue("@attack", cardEntity.Attack);
-            command.Parameters.AddWithNullableValue("@defense", cardEntity.Defense);
-            command.Parameters.AddWithValue("@description", cardEntity.Description.Replace("\r\n", "\n"));
-            command.Parameters.AddWithNullableValue("@passcode", cardEntity.Passcode);
-
-            await command.ExecuteNonQueryAsync();
         }
     }
 }

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
-using System.Reflection;
-using System.Resources;
+using System.Linq;
 using Yugioh.Draw.Repositories;
 using Yugioh.Draw.Utils;
 
@@ -187,12 +184,21 @@ namespace Yugioh.Draw.Builders
         Gold
     }
 
-    public enum TextJustification
+    public static class Creator
     {
-        Left,
-        Right,
-        Center,
-        Full
+        public const string StudioDice = "2020 Studio Dice/SHUEISHA, TV TOKYO, KONAMI";
+        public const string KazukiTakahashi = "1996 KAZUKI TAKAHASHI";
+    }
+
+    public class Paragraph
+    {
+        public string FontFamily { get; set; }
+        public string RawText { get; set; }
+        public bool FitOneLine { get; set; }
+        public bool DrawAtBottom { get; set; }
+        public List<string> DrawableLines { get; set; }
+        public float TotalWidth { get; set; }
+        public float ScaleWidth { get; set; }
     }
 
     public class CardBuilder : IBuilder<Bitmap>
@@ -300,9 +306,42 @@ namespace Yugioh.Draw.Builders
             FontFamily fontFamily = _resourceRepository.GetFontFamily("Yu-Gi-Oh! Matrix Small Caps 1");
             Font font = new Font(fontFamily, fontHeight);
 
+            FontFamily atFontFamily = _resourceRepository.GetFontFamily("MatrixRegular");
+            Font atFont = new Font(atFontFamily, 60);
+
+            string atString = " @ ";
+
+            var sections = name.Split('@');
+            var bitmaps = new List<Bitmap>();
+            for (int i=0; i< sections.Length; ++i)
+            {
+                string section = sections[i];
+                if (i > 0)
+                {
+                    Bitmap atNameBitmap = ImageUtil.RenderText(atString, atFont, brush, g.MeasureString(atString, atFont));
+                    bitmaps.Add(atNameBitmap);
+                }
+
+                Bitmap sectionBitmap = ImageUtil.RenderText(section, font, brush, g.MeasureString(section, font));
+                bitmaps.Add(sectionBitmap);
+            }
+
             int nameWidthUpperLimit = 610;
-            Bitmap nameBitmap = ImageUtil.RenderText(name, font, brush, g.MeasureString(name, font));
+
+            Bitmap nameBitmap = new Bitmap(bitmaps.Sum(_b => _b.Width), bitmaps.Max(_b => _b.Height));
+            using (var gr = Graphics.FromImage(nameBitmap))
+            {
+                int x = 0;
+                foreach (var bitmap in bitmaps)
+                {          
+                    gr.DrawImage(bitmap, x, nameBitmap.Height - bitmap.Height);
+                    x += bitmap.Width;
+                }               
+            }
+            
+
             float targetWidth = nameBitmap.Width > nameWidthUpperLimit ? nameWidthUpperLimit : nameBitmap.Width;
+
             g.DrawImage(nameBitmap, 67, 47, targetWidth, nameBitmap.Height);
 
             return this;
@@ -553,8 +592,8 @@ namespace Yugioh.Draw.Builders
 
         public CardBuilder AddPasscode(string passcode, Brush brush)
         {
-            // Cannot draw greater than 8
-            if (passcode.Length != 8)
+            // Can only draw if length is 8
+            if (passcode == null || passcode.Length != 8)
                 return this;
 
             int fontHeight = 17;
@@ -610,27 +649,100 @@ namespace Yugioh.Draw.Builders
 
         public CardBuilder AddCreator(string creator, Brush brush)
         {
-            // TODO : Revisit
-            int fontHeight = 16;
             FontFamily fontFamily = _resourceRepository.GetFontFamily("StoneSerif LT");
-            Font font = new Font(fontFamily, fontHeight);
 
-            RectangleF rec = new RectangleF(470, 1147, 500, 1200);
-            g.DrawString(creator, font, brush, rec);
+            int creatorFontHeight = 16;
+            Font creatorfont = new Font(fontFamily, creatorFontHeight);            
+            SizeF creatorSize = g.MeasureString(creator, creatorfont);
 
-            RectangleF rec2 = new RectangleF(449, 1145, 40, 1200);
-            Font copyrightFont = new Font(fontFamily, 20);
-            g.DrawString("©", copyrightFont, brush, rec2);
+            string copyrightText = "©";
+            int copyrightFontHeight = 20;
+            Font copyrightFont = new Font(fontFamily, copyrightFontHeight);
+            SizeF copyrightSize = g.MeasureString(copyrightText, copyrightFont);
+
+            using (var b = new Bitmap((int) creatorSize.Width, (int) creatorSize.Height))
+            {
+                using (var gr = ImageUtil.GetGraphics(b))
+                {
+                    gr.DrawString(creator, creatorfont, brush, Point.Empty);
+
+                    Bitmap trimmedCreatorBitmap = ImageUtil.TrimLeft(b);
+
+                    // Squash when too large
+                    int maxWidth = 366;
+                    float scaledWidth = trimmedCreatorBitmap.Width > maxWidth ? maxWidth : trimmedCreatorBitmap.Width;
+                    g.DrawImage(trimmedCreatorBitmap, 749 - scaledWidth, 1147, scaledWidth, trimmedCreatorBitmap.Height);
+
+                    RectangleF copyrightRect = new RectangleF(749 - scaledWidth - 26, 1144, copyrightSize.Width, copyrightSize.Height);
+                    g.DrawString(copyrightText, copyrightFont, brush, copyrightRect);
+                }
+            }
 
             return this;
         }
 
         public CardBuilder AddDescription(string description, Brush brush)
         {
-            string fontFamilyName = _isNormalMonster ? "Yu-Gi-Oh! StoneSerif LT" : "Yu-Gi-Oh! Matrix Book";
-            var targetRect = _isMonster ? new RectangleF(65, 936, 700, 154) : new RectangleF(62, 904, 703, 225);
-            
-            AddDescription(description, fontFamilyName, brush, targetRect);
+            var targetRect = _isMonster ? new RectangleF(63, 936, 701, 160) : new RectangleF(62, 904, 703, 225);
+
+            string[] rawParagraphs = description.Replace("\r\n", "\n").Split(new[] { "\n" }, StringSplitOptions.None)
+                .Where(s => s.Trim() != "").ToArray();
+
+            var _paragraphs = new List<Paragraph>();
+
+            for (int i = 0; i < rawParagraphs.Length; ++i)
+            {
+                string rawParagraph = rawParagraphs[i];
+                string fontFamilyName = _isNormalMonster ? "Yu-Gi-Oh! StoneSerif LT" : "Yu-Gi-Oh! Matrix Book";
+                bool drawAtBottom = false;
+
+                if (rawParagraph.Contains("(This card is always treated"))
+                {
+                    fontFamilyName = "Yu-Gi-Oh! Matrix Book";
+                    drawAtBottom = _isNormalMonster;
+                }
+                        
+                var paragraph = new Paragraph()
+                {
+                    RawText = rawParagraph,
+                    FontFamily = fontFamilyName,
+                    FitOneLine = false,
+                    DrawAtBottom = drawAtBottom
+                };
+                _paragraphs.Add(paragraph);
+            }
+
+            DrawParagraphs(targetRect, brush, _paragraphs);
+
+            return this;
+        }
+
+        public CardBuilder AddDescription(string description, Brush brush, bool hasMaterials)
+        {
+            int lineSizeCharLimit = 130;
+
+            string fontFamilyName = "Yu-Gi-Oh! Matrix Book";
+            var targetRect = new RectangleF(63, 934, 701, 160);
+            string[] paragraphs = description.Replace("\r\n", "\n").Split(new[] { "\n" }, StringSplitOptions.None)
+                .Where(s => s.Trim() != "").ToArray();
+
+            var _paragraphs = new List<Paragraph>();
+
+            for (int i = 0; i < paragraphs.Length; ++i)
+            {
+                string rawText = paragraphs[i];
+
+                var paragraph = new Paragraph()
+                {
+                    RawText = rawText,
+                    FontFamily = fontFamilyName,
+                    FitOneLine = hasMaterials && i == 0 && rawText.Length < lineSizeCharLimit,
+                    DrawAtBottom = false
+                };
+                _paragraphs.Add(paragraph);
+            }
+
+            DrawParagraphs(targetRect, brush, _paragraphs);
 
             return this;
         }
@@ -639,8 +751,24 @@ namespace Yugioh.Draw.Builders
         {
             string fontFamilyName = "Yu-Gi-Oh! Matrix Book";
             var targetRect = new RectangleF(124, 753, 580, 134);
+            string[] paragraphs = description.Replace("\r\n", "\n").Split(new[] { "\n" }, StringSplitOptions.None)
+                .Where(s => s.Trim() != "").ToArray();
 
-            AddDescription(description, fontFamilyName, brush, targetRect);
+            var _paragraphs = new List<Paragraph>();
+
+            for (int i = 0; i < paragraphs.Length; ++i)
+            {
+                var paragraph = new Paragraph()
+                {
+                    RawText = paragraphs[i],
+                    FontFamily = fontFamilyName,
+                    FitOneLine = false,
+                    DrawAtBottom = false
+                };
+                _paragraphs.Add(paragraph);
+            }
+
+            DrawParagraphs(targetRect, brush, _paragraphs);
 
             return this;
         }
@@ -659,6 +787,9 @@ namespace Yugioh.Draw.Builders
                 int width = 717;
                 double scaleFactor = ((double)width) / artworkImage.Width;
                 int height = (int)(artworkImage.Height * scaleFactor);
+
+                // stretch if too short
+                height = height > 537 ? height : 537;
                 g.DrawImage(artworkImage, 55, 213, width, height);
             }
             else
@@ -787,229 +918,225 @@ namespace Yugioh.Draw.Builders
             return coords;
         }
 
-        private void AddDescription(string description, string fontFamilyName, Brush brush, RectangleF rect)
-        {
-            FontFamily fontFamily = _resourceRepository.GetFontFamily(fontFamilyName);
-            float lineSpacing = 0.8f;
-
-            DrawParagraphs(g, rect, fontFamily, brush, description, TextJustification.Full, lineSpacing, 0, 0);
-        }
-
-        // http://csharphelper.com/blog/2014/10/fully-justify-paragraphs-of-text-in-c/
-        // Draw justified text on the Graphics object in the indicated Rectangle.
-        private void DrawParagraphs(Graphics gr, RectangleF rect,
-            FontFamily fontFamily, Brush brush, string text,
-            TextJustification justification, float lineSpacing,
-            float indent, float paragraphSpacing)
-        {
-            // Split the text into paragraphs.
-            string[] paragraphs = text.Replace("\r\n", "\n").Split(new[] { "\n" }, StringSplitOptions.None);
-            float defaultFontHeight = 18;
-            float fontHeight = defaultFontHeight;
-            List<List<string>> paragraphLines = new List<List<string>>();
-
-            bool fitsRectangle = false;
-            while (!fitsRectangle)
+        private void DrawParagraphs(RectangleF rect, Brush brush, List<Paragraph> paragraphs)
+        {      
+            // Can't draw anything if the paragraphs are empty
+            if (paragraphs.All(p => p.RawText.Trim().Length == 0))
             {
+                return;
+            }
+
+            TextUtil.TextJustification justification = TextUtil.TextJustification.Full;
+            float lineSpacing = 0.8f;
+            float indent = 0;
+            float paragraphSpacing = 0;
+
+            float maxFontHeight = 18;
+            float minimumFontHeight = 13;
+            float fontHeight = maxFontHeight;
+            float fontHeightDelta = 0.05f;
+            bool bestFit = false;
+            int maxRemainingY = 4;
+
+            while (!bestFit)
+            {
+                if (fontHeight < minimumFontHeight)
+                {
+                    fontHeight = maxFontHeight;
+                    maxRemainingY += 1;
+                }
+                //float remainingArea = CalculateAndSetDescriptionLayout(rect, brush, paragraphs, fontHeight, lineSpacing, paragraphSpacing);
+                bestFit = CalculateAndSetDescriptionLayout(rect, brush, paragraphs, fontHeight, lineSpacing, paragraphSpacing, maxRemainingY);
+
+                // Try the next font size down 
+                fontHeight -= fontHeightDelta;
+            }
+
+            float y = 0;
+            for (int k = 0; k < paragraphs.Count; ++k)
+            {
+                Paragraph paragraph = paragraphs[k];
+                FontFamily fontFamily = _resourceRepository.GetFontFamily(paragraph.FontFamily);
                 Font font = new Font(fontFamily, fontHeight);
 
-                // Reset our lines
-                paragraphLines.Clear();
+                var stretchedRect = new RectangleF(0, 0, paragraph.TotalWidth, rect.Height);
 
-                // Get the coordinates for the first line.
-                float y = rect.Top;
+                // Draw the lines onto a Bitmap
+                Bitmap paragraphBitmap = TextUtil.RenderLines(font,
+                        brush, paragraph.DrawableLines, stretchedRect, justification,
+                        lineSpacing, indent);
 
-                int paragraphCount = paragraphs.Length;
+                var paragraphWidth = paragraphBitmap.Width * paragraph.ScaleWidth;
+                var paragraphHeight = paragraphBitmap.Height;
 
-                for (int i = 0; i < paragraphCount; ++i)
+                // If last paragraph
+                if (k == (paragraphs.Count - 1) && paragraph.DrawAtBottom)
                 {
-                    string paragraph = paragraphs[i];
-                    var lines = new List<string>();
-
-                    // Break the text into words.
-                    string[] words = paragraph.Split(' ');
-                    int startWordIndex = 0;
-
-                    // Repeat until we run out of text or room.
-                    for (; ; )
-                    {
-                        // See how many words will fit.
-                        // Start with just the next word.
-                        string line = words[startWordIndex];
-
-                        // Add more words until the line won't fit.
-                        int endWordIndex = startWordIndex + 1;
-                        while (endWordIndex < words.Length)
-                        {
-                            // See if the next word fits.
-                            string trialLine = line + " " + words[endWordIndex];
-                            SizeF line_size = gr.MeasureString(trialLine, font);
-                            if (line_size.Width > rect.Width)
-                            {
-                                // The line is too wide. Don't use the last word.
-                                endWordIndex--;
-                                break;
-                            }
-                            else
-                            {
-                                // The word fits. Save the test line.
-                                line = trialLine;
-                            }
-
-                            // Try the next word.
-                            endWordIndex++;
-                        }
-
-                        lines.Add(line);
-
-                        // Move down to draw the next line.
-                        y += font.Height * lineSpacing;
-
-                        // Make sure there's room for another line.
-                        if (font.Size > rect.Height) break;
-
-                        // Start the next line at the next word.
-                        startWordIndex = endWordIndex + 1;
-                        if (startWordIndex >= words.Length) break;
-
-                        // Don't indent subsequent lines in this paragraph.
-                        indent = 0;
-                    }
-
-                    paragraphLines.Add(lines);
-
-                    if (i < (paragraphCount - 1))
-                    {
-                        // Add a gap after the paragraph.
-                        y += font.Height * paragraphSpacing;
-                    }
-                }
-
-                // Return a RectangleF representing any unused
-                // space in the original RectangleF.
-                float height = rect.Bottom - y;
-                if (height < 0)
-                {
-                    // Try the next size down
-                    fontHeight -= 0.05f;
+                    g.DrawImage(paragraphBitmap, rect.X, rect.Bottom - paragraphHeight, paragraphWidth, paragraphHeight);
                 }
                 else
                 {
-                    fitsRectangle = true;
+                    g.DrawImage(paragraphBitmap, rect.X, rect.Y + y, paragraphWidth, paragraphHeight); // TODO : need a paragraphHeight - y ?
                 }
-            }
 
-            Font finalFont = new Font(fontFamily, fontHeight);
-            float y2 = rect.Top;
-
-            foreach (List<string> lines in paragraphLines)
-            {
-                int lineCount = lines.Count;
-                for (int i = 0; i < lineCount; ++i)
+                // If we're not on the last paragraph
+                if (k < paragraphs.Count - 1)
                 {
-                    string line = lines[i];
-                    if (i == (lineCount - 1) &&
-                (justification == TextJustification.Full))
+                    // Add the line spacing.
+                    foreach (var line in paragraph.DrawableLines)
                     {
-                        // This is the last line. Don't justify it.
-                        DrawLine(gr, line, finalFont, brush,
-                            rect.Left + indent,
-                            y2,
-                            rect.Width - indent,
-                            TextJustification.Left);
-                    }
-                    else
-                    {
-                        // This is not the last line. Justify it.
-                        DrawLine(gr, line, finalFont, brush,
-                            rect.Left + indent,
-                            y2,
-                            rect.Width - indent,
-                            justification);
+                        y += g.MeasureString(line, font).Height * 0.7f;
                     }
 
-                    // Move down to draw the next line.
-                    y2 += finalFont.Height * lineSpacing;
+                    // Add the paragraph spacing
+                    y += (font.Height * paragraphSpacing);
                 }
-
-                // Add a gap after the paragraph.
-                y2 += finalFont.Height * paragraphSpacing;
-            }
-        }
-
-        // Draw a line of text.
-        private void DrawLine(Graphics gr, string line, Font font,
-            Brush brush, float x, float y, float width,
-            TextJustification justification)
-        {
-            // Make a rectangle to hold the text.
-            RectangleF rect = new RectangleF(x, y, width, font.Height);
-
-            // See if we should use full justification.
-            if (justification == TextJustification.Full)
-            {
-                // Justify the text.
-                DrawJustifiedLine(gr, rect, font, brush, line);
-            }
-            else
-            {
-                // Make a StringFormat to align the text.
-                using (StringFormat sf = new StringFormat())
+                else
                 {
-                    // Use the appropriate alignment.
-                    switch (justification)
-                    {
-                        case TextJustification.Left:
-                            sf.Alignment = StringAlignment.Near;
-                            break;
-                        case TextJustification.Right:
-                            sf.Alignment = StringAlignment.Far;
-                            break;
-                        case TextJustification.Center:
-                            sf.Alignment = StringAlignment.Center;
-                            break;
-                    }
-
-                    gr.DrawString(line, font, brush, rect, sf);
+                    // Add the height of the last line
+                    y += g.MeasureString(paragraph.DrawableLines.Last(), font).Height;
                 }
             }
         }
 
-        // Draw justified text on the Graphics object
-        // in the indicated Rectangle.
-        private void DrawJustifiedLine(Graphics gr, RectangleF rect,
-            Font font, Brush brush, string text)
+        private bool CalculateAndSetDescriptionLayout(RectangleF rect, Brush brush, List<Paragraph> paragraphs, float fontHeight, float lineSpacing, float paragraphSpacing, int maxRemainingY)
         {
-            // Break the text into words.
-            string[] words = text.Split(' ');
+            float y = 0;
+            int additionalWidth = 0;
+            int maxAdditionalWidth = 290;
+            int defaultFontHeight = 18;
 
-            // Add a space to each word and get their lengths.
-            float[] word_width = new float[words.Length];
-            float total_width = 0;
-            for (int i = 0; i < words.Length; i++)
+            using (Bitmap b = new Bitmap((int)rect.Width + maxAdditionalWidth, (int)rect.Height))
             {
-                // See how wide this word is.
-                SizeF size = gr.MeasureString(words[i], font);
-                word_width[i] = size.Width;
-                total_width += word_width[i];
+                using (Graphics gr = ImageUtil.GetGraphics(b))
+                {
+                    gr.Clear(Color.Transparent);
+
+                    for (int i = 0; i < paragraphs.Count; ++i)
+                    {
+                        Paragraph paragraph = paragraphs[i];
+                        paragraph.DrawableLines = new List<string>();
+                        
+                        FontFamily fontFamily = _resourceRepository.GetFontFamily(paragraph.FontFamily);
+                        Font font = new Font(fontFamily, fontHeight);
+
+                        if (paragraph.FitOneLine)
+                        {
+                            // set the entire paragraph as a single drawable line
+                            string line = paragraph.RawText;
+                            SizeF lineSize = gr.MeasureString(line, font);
+
+                            paragraph.DrawableLines.Add(line);
+                            paragraph.TotalWidth = lineSize.Width;
+                            paragraph.ScaleWidth = lineSize.Width > rect.Width ? rect.Width / lineSize.Width : 1;
+
+                            // Move down to draw the next line.
+                            y += lineSize.Height * 0.7f;
+                        }
+                        else
+                        {
+                            int maxWidth = (int)rect.Width + additionalWidth;
+                            // Break the text into words.
+                            string[] words = paragraph.RawText.Split(' ');
+                            int startWordIndex = 0;
+
+                            // Repeat until we run out of text or room.
+                            for (; ; )
+                            {
+                                // See how many words will fit.
+                                // Start with just the next word.
+                                string line = words[startWordIndex];
+                                SizeF lineSize;
+
+                                // Add more words until the line won't fit.
+                                int endWordIndex = startWordIndex + 1;
+                                while (endWordIndex < words.Length)
+                                {
+                                    // See if the next word fits.
+                                    string trialLine = line + " " + words[endWordIndex];
+                                    SizeF trialLineSize = gr.MeasureString(trialLine, font);
+
+                                    // if the line is longer than our rectangle
+                                    if (trialLineSize.Width > maxWidth)
+                                    {
+                                        // The line is too wide. Don't use the last word.
+                                        endWordIndex--;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        // The word fits. Save the test line.
+                                        line = trialLine;
+                                        lineSize = trialLineSize;
+                                    }
+
+                                    // Try the next word.
+                                    endWordIndex++;
+                                }
+
+                                paragraph.DrawableLines.Add(line);
+                                
+                               
+                                // Move down to draw the next line.
+                                y += lineSize.Height * 0.7f;
+
+                                // Start the next line at the next word.
+                                startWordIndex = endWordIndex + 1;
+                                if (startWordIndex >= words.Length) break;
+                            }
+
+                            paragraph.TotalWidth =  maxWidth;
+                            paragraph.ScaleWidth = rect.Width / maxWidth;
+                        }
+
+                        // If last 
+                        if (i == (paragraphs.Count - 1))
+                        {
+                            // If we were on the last word of the last paragraph then add the height of the text
+                            string lastLine = paragraphs.Last().DrawableLines.Last();
+                            SizeF lastLineSize = gr.MeasureString(lastLine, font);
+                            y += lastLineSize.Height * 0.3f;
+
+                            // Check how much space is left vertically
+                            float remainingY = rect.Height - y;
+
+                            if (!(font.Size == defaultFontHeight && additionalWidth == 0) && remainingY > maxRemainingY)
+                            {
+                                // We're too short
+                                return false;
+                            }
+                            else if (remainingY < 0)
+                            {
+                                if (additionalWidth == maxAdditionalWidth)
+                                {
+                                    return false; 
+                                }
+                                else
+                                {
+                                    additionalWidth += 5;
+
+                                    // reset looping through paragraph
+                                    i = -1;
+                                    y = 0;
+                                    gr.Clear(Color.Transparent);
+                                }             
+                            }       
+                            else
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            // Add a gap after the paragraph.
+                            y += font.Height * paragraphSpacing;
+                        }
+                    }
+                }
             }
 
-            // Get the additional spacing between words.
-            float extra_space = rect.Width - total_width;
-            int num_spaces = words.Length - 1;
-            if (words.Length > 1) extra_space /= num_spaces;
-
-            // Draw the words.
-            float x = rect.Left;
-            float y = rect.Top;
-            for (int i = 0; i < words.Length; i++)
-            {
-                // Draw the word.
-                gr.DrawString(words[i], font, brush, x, y);
-
-                // Move right to draw the next word.
-                x += word_width[i] + extra_space;
-            }
-        }
+            // shouldn't get here
+            return false;
+        }  
     }
 }

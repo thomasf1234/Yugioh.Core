@@ -9,16 +9,18 @@ namespace Yugioh.Data.Repositories
 {
     public class ArtworkRepository : IArtworkRepository
     {
-        public async Task<bool> HasArtworkAsync(int artworkId, SqliteConnection connection)
+        public async Task<bool> HasArtworkAsync(int cardId, int ordinal, SqliteConnection connection, SqliteTransaction transaction)
         {
             string queryString =
             $@"
 SELECT COUNT(*) FROM Artwork 
-WHERE {nameof(ArtworkEntity.ArtworkId)} = @artworkId;";
+WHERE {nameof(ArtworkEntity.CardId)} = @cardId
+AND {nameof(ArtworkEntity.Ordinal)} = @ordinal;";
 
-            using (var command = new SqliteCommand(queryString, connection))
+            using (var command = new SqliteCommand(queryString, connection, transaction))
             {
-                command.Parameters.AddWithValue("@artworkId", artworkId);
+                command.Parameters.AddWithValue("@cardId", cardId);
+                command.Parameters.AddWithValue("@ordinal", ordinal);
 
                 long artworkCount = (long)await command.ExecuteScalarAsync();
 
@@ -26,38 +28,36 @@ WHERE {nameof(ArtworkEntity.ArtworkId)} = @artworkId;";
             }
         }
 
-        public async Task<ArtworkEntity> FindArtworkAsync(int artworkId, SqliteConnection connection)
+        public async Task<ArtworkEntity> FindArtworkAsync(int cardId, int ordinal, SqliteConnection connection, SqliteTransaction transaction)
         {
             string queryString =
             $@"
-SELECT {nameof(ArtworkEntity.CardId)},
-       {nameof(ArtworkEntity.Alternate)},
-       {nameof(ArtworkEntity.Image)}
+SELECT {nameof(ArtworkEntity.Image)}
 FROM Artwork 
-WHERE {nameof(ArtworkEntity.ArtworkId)} = @artworkId;";
+WHERE {nameof(ArtworkEntity.CardId)} = @cardId
+AND {nameof(ArtworkEntity.Ordinal)} = @ordinal
+LIMIT 1;";
 
-            using (var command = new SqliteCommand(queryString, connection))
+            using (var command = new SqliteCommand(queryString, connection, transaction))
             {
-                command.Parameters.AddWithValue("@artworkId", artworkId);
+                command.Parameters.AddWithValue("@cardId", cardId);
+                command.Parameters.AddWithValue("@ordinal", ordinal);
 
                 using (SqliteDataReader reader = await command.ExecuteReaderAsync())
                 {
                     if (await reader.ReadAsync())
                     {
-                        int cardId = reader.GetInt32(0);
-                        bool alternate = reader.GetBoolean(1);
                         Image image;
 
-                        using (var readStream = reader.GetStream(2))
+                        using (var readStream = reader.GetStream(0))
                         {
-                            image = Image.FromStream(reader.GetStream(2));
+                            image = Image.FromStream(readStream);
                         }
 
                         return new ArtworkEntity()
                         {
-                            ArtworkId = artworkId,
                             CardId = cardId,
-                            Alternate = alternate,
+                            Ordinal = ordinal,
                             Image = image
                         };
                     }
@@ -69,33 +69,32 @@ WHERE {nameof(ArtworkEntity.ArtworkId)} = @artworkId;";
             }
         }
 
-        public async Task InsertArtworkAsync(ArtworkEntity artworkEntity, SqliteConnection connection)
+        public async Task InsertArtworkAsync(ArtworkEntity artworkEntity, SqliteConnection connection, SqliteTransaction transaction)
         {
-            var command = connection.CreateCommand();
-            command.CommandText =
+            string queryString =
             $@"
-INSERT INTO Artwork ({nameof(ArtworkEntity.ArtworkId)}, 
-                     {nameof(ArtworkEntity.CardId)},
-                     {nameof(ArtworkEntity.Alternate)},
+INSERT INTO Artwork ({nameof(ArtworkEntity.CardId)},
+                     {nameof(ArtworkEntity.Ordinal)},
                      {nameof(ArtworkEntity.Image)}
                      )
-VALUES (@artworkId,
-        @cardId,
-        @alternate,
+VALUES (@cardId,
+        @ordinal,
         @image);";
 
-            command.Parameters.AddWithValue("@artworkId", artworkEntity.ArtworkId);
-            command.Parameters.AddWithValue("@cardId", artworkEntity.CardId);
-            command.Parameters.AddWithValue("@alternate", artworkEntity.Alternate);
+            using (var command = new SqliteCommand(queryString, connection, transaction))
+            {
+                command.Parameters.AddWithValue("@cardId", artworkEntity.CardId);
+                command.Parameters.AddWithValue("@ordinal", artworkEntity.Ordinal);
 
-            byte[] imageBytes = ImageUtil.ToBytes(artworkEntity.Image);
-            var imageParam = new SqliteParameter("@image", imageBytes);
-            imageParam.Size = imageBytes.Length;
-            imageParam.DbType = DbType.Binary;
+                byte[] imageBytes = ImageUtil.ToBytes(artworkEntity.Image);
+                var imageParam = new SqliteParameter("@image", imageBytes);
+                imageParam.Size = imageBytes.Length;
+                imageParam.DbType = DbType.Binary;
 
-            command.Parameters.Add(imageParam);
+                command.Parameters.Add(imageParam);
 
-            await command.ExecuteNonQueryAsync();
+                await command.ExecuteNonQueryAsync();
+            }
         }
     }
 }

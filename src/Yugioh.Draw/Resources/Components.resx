@@ -253,15 +253,6 @@
   <data name="FRAME__PENDULUM_EFFECT" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\FRAME__PENDULUM_EFFECT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="FRAME__PENDULUM_EGYPTIAN_GOD_BLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\FRAME__PENDULUM_EGYPTIAN_GOD_BLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="FRAME__PENDULUM_EGYPTIAN_GOD_RED" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\FRAME__PENDULUM_EGYPTIAN_GOD_RED.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="FRAME__PENDULUM_EGYPTIAN_GOD_YELLOW" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\FRAME__PENDULUM_EGYPTIAN_GOD_YELLOW.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="FRAME__PENDULUM_FUSION" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\FRAME__PENDULUM_FUSION.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -271,29 +262,8 @@
   <data name="FRAME__PENDULUM_RITUAL" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\FRAME__PENDULUM_RITUAL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="FRAME__PENDULUM_SACRED_BEAST_BLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\FRAME__PENDULUM_SACRED_BEAST_BLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="FRAME__PENDULUM_SACRED_BEAST_RED" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\FRAME__PENDULUM_SACRED_BEAST_RED.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="FRAME__PENDULUM_SACRED_BEAST_YELLOW" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\FRAME__PENDULUM_SACRED_BEAST_YELLOW.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="FRAME__PENDULUM_SPELL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\FRAME__PENDULUM_SPELL.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="FRAME__PENDULUM_SYNCHRO" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\FRAME__PENDULUM_SYNCHRO.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="FRAME__PENDULUM_TOKEN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\FRAME__PENDULUM_TOKEN.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="FRAME__PENDULUM_TRAP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\FRAME__PENDULUM_TRAP.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="FRAME__PENDULUM_WICKED_BEAST" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>images\FRAME__PENDULUM_WICKED_BEAST.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="FRAME__PENDULUM_XYZ" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\FRAME__PENDULUM_XYZ.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

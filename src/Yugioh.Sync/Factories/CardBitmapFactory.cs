@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Yugioh.Data.Entities;
 using Yugioh.Draw.Builders;
@@ -18,7 +14,7 @@ namespace Yugioh.Sync.Factories
         {
             _resourceRepository = resourceRepository;
         }
-        public async Task<Bitmap> CreateCardBitmapAsync(CardEntity cardEntity, ArtworkEntity artworkEntity)
+        public async Task<Bitmap> CreateCardBitmapAsync(CardEntity cardEntity, string cardNumber, string passcode, ArtworkEntity artworkEntity)
         {
             if (cardEntity.Type != Data.Entities.Type.Monster)
             {
@@ -28,11 +24,11 @@ namespace Yugioh.Sync.Factories
                 .AddAttribute((Draw.Builders.Attribute)cardEntity.Attribute)
                 .AddName(cardEntity.Name, Brushes.White)
                 .AddProperty((Draw.Builders.Property)cardEntity.Property)
-                //.AddNumber("DUSA-EN053", Brushes.Black)
+                .AddNumber(cardNumber, Brushes.Black)
                 .AddDescription(cardEntity.Description, Brushes.Black)
-                .AddPasscode(cardEntity.Passcode, Brushes.Black)
-                .AddEditionAndHologram(Edition.First, Brushes.Black)
-                .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                .AddPasscode(passcode, Brushes.Black)
+                .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
+                .AddCreator(Creator.StudioDice, Brushes.Black)
                 .Build();
             }
 
@@ -49,14 +45,14 @@ namespace Yugioh.Sync.Factories
                         .AddName(cardEntity.Name, Brushes.Black)
                         .AddLevel((Draw.Builders.Level)cardEntity.Level)
                         .AddPendulumScale((Draw.Builders.PendulumScale)cardEntity.PendulumScale)
-                        //.AddNumber("DUSA-EN053", Brushes.Black)
+                        .AddNumber(cardNumber, Brushes.Black)
                         .AddMonsterType(cardEntity.GetDisplayedTypes())
-                        .AddDescription(cardEntity.Description, Brushes.Black)
+                        .AddDescription(cardEntity.Description, Brushes.Black, true)
                         .AddPendulumDescription(cardEntity.PendulumDescription, Brushes.Black)
                         .AddAtkAndDef(cardEntity.Attack, cardEntity.Defense, Brushes.Black)
-                        .AddPasscode(cardEntity.Passcode, Brushes.Black)
-                        .AddEditionAndHologram(Edition.First, Brushes.Black)
-                        .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                        .AddPasscode(passcode, Brushes.Black)
+                        .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
+                        .AddCreator(Creator.StudioDice, Brushes.Black)
                         .Build();
                 }
                 else if (monsterTypes.HasFlag(MonsterTypes.Ritual))
@@ -66,14 +62,14 @@ namespace Yugioh.Sync.Factories
                         .AddName(cardEntity.Name, Brushes.Black)
                         .AddLevel((Draw.Builders.Level)cardEntity.Level)
                         .AddPendulumScale((Draw.Builders.PendulumScale)cardEntity.PendulumScale)
-                        //.AddNumber("DUSA-EN053", Brushes.Black)
+                        .AddNumber(cardNumber, Brushes.Black)
                         .AddMonsterType(cardEntity.GetDisplayedTypes())
                         .AddDescription(cardEntity.Description, Brushes.Black)
                         .AddPendulumDescription(cardEntity.PendulumDescription, Brushes.Black)
                         .AddAtkAndDef(cardEntity.Attack, cardEntity.Defense, Brushes.Black)
-                        .AddPasscode(cardEntity.Passcode, Brushes.Black)
-                        .AddEditionAndHologram(Edition.First, Brushes.Black)
-                        .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                        .AddPasscode(passcode, Brushes.Black)
+                        .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
+                        .AddCreator(Creator.StudioDice, Brushes.Black)
                         .Build();
                 }
                 else if (monsterTypes.HasFlag(MonsterTypes.Synchro))
@@ -83,14 +79,14 @@ namespace Yugioh.Sync.Factories
                         .AddName(cardEntity.Name, Brushes.Black)
                         .AddLevel((Draw.Builders.Level)cardEntity.Level)
                         .AddPendulumScale((Draw.Builders.PendulumScale)cardEntity.PendulumScale)
-                        //.AddNumber("DUSA-EN053", Brushes.Black)
+                        .AddNumber(cardNumber, Brushes.Black)
                         .AddMonsterType(cardEntity.GetDisplayedTypes())
-                        .AddDescription(cardEntity.Description, Brushes.Black)
+                        .AddDescription(cardEntity.Description, Brushes.Black, true)
                         .AddPendulumDescription(cardEntity.PendulumDescription, Brushes.Black)
                         .AddAtkAndDef(cardEntity.Attack, cardEntity.Defense, Brushes.Black)
-                        .AddPasscode(cardEntity.Passcode, Brushes.Black)
-                        .AddEditionAndHologram(Edition.First, Brushes.Black)
-                        .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                        .AddPasscode(passcode, Brushes.Black)
+                        .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
+                        .AddCreator(Creator.StudioDice, Brushes.Black)
                         .Build();
                 }
                 else if (monsterTypes.HasFlag(MonsterTypes.Xyz))
@@ -100,21 +96,20 @@ namespace Yugioh.Sync.Factories
                         .AddName(cardEntity.Name, Brushes.Black)
                         .AddRank((Draw.Builders.Rank)cardEntity.Rank)
                         .AddPendulumScale((Draw.Builders.PendulumScale)cardEntity.PendulumScale)
-                        //.AddNumber("DUSA-EN053", Brushes.Black)
+                        .AddNumber(cardNumber, Brushes.Black)
                         .AddMonsterType(cardEntity.GetDisplayedTypes())
-                        .AddDescription(cardEntity.Description, Brushes.Black)
+                        .AddDescription(cardEntity.Description, Brushes.Black, true)
                         .AddPendulumDescription(cardEntity.PendulumDescription, Brushes.Black)
                         .AddAtkAndDef(cardEntity.Attack, cardEntity.Defense, Brushes.Black)
-                        .AddPasscode(cardEntity.Passcode, Brushes.Black)
-                        .AddEditionAndHologram(Edition.First, Brushes.Black)
-                        .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                        .AddPasscode(passcode, Brushes.Black)
+                        .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
+                        .AddCreator(Creator.StudioDice, Brushes.Black)
                         .Build();
                 }
                 else if (monsterTypes.HasFlag(MonsterTypes.Link))
                 {
-                    return null;
+                    throw new Exception("Pendulum Link monsters not supported");
                 }
-                //frame = Frame.PendulumLink;
                 else if (monsterTypes.HasFlag(MonsterTypes.Effect))
                 {
                     return new CardBuilder(_resourceRepository, Frame.PendulumEffect, artworkEntity.Image)
@@ -122,14 +117,14 @@ namespace Yugioh.Sync.Factories
                         .AddName(cardEntity.Name, Brushes.Black)
                         .AddLevel((Draw.Builders.Level)cardEntity.Level)
                         .AddPendulumScale((Draw.Builders.PendulumScale)cardEntity.PendulumScale)
-                        //.AddNumber("DUSA-EN053", Brushes.Black)
+                        .AddNumber(cardNumber, Brushes.Black)
                         .AddMonsterType(cardEntity.GetDisplayedTypes())
                         .AddDescription(cardEntity.Description, Brushes.Black)
                         .AddPendulumDescription(cardEntity.PendulumDescription, Brushes.Black)
                         .AddAtkAndDef(cardEntity.Attack, cardEntity.Defense, Brushes.Black)
-                        .AddPasscode(cardEntity.Passcode, Brushes.Black)
-                        .AddEditionAndHologram(Edition.First, Brushes.Black)
-                        .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                        .AddPasscode(passcode, Brushes.Black)
+                        .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
+                        .AddCreator(Creator.StudioDice, Brushes.Black)
                         .Build();
                 }
                 else
@@ -139,14 +134,14 @@ namespace Yugioh.Sync.Factories
                         .AddName(cardEntity.Name, Brushes.Black)
                         .AddLevel((Draw.Builders.Level)cardEntity.Level)
                         .AddPendulumScale((Draw.Builders.PendulumScale)cardEntity.PendulumScale)
-                        //.AddNumber("DUSA-EN053", Brushes.Black)
+                        .AddNumber(cardNumber, Brushes.Black)
                         .AddMonsterType(cardEntity.GetDisplayedTypes())
                         .AddDescription(cardEntity.Description, Brushes.Black)
                         .AddPendulumDescription(cardEntity.PendulumDescription, Brushes.Black)
                         .AddAtkAndDef(cardEntity.Attack, cardEntity.Defense, Brushes.Black)
-                        .AddPasscode(cardEntity.Passcode, Brushes.Black)
-                        .AddEditionAndHologram(Edition.First, Brushes.Black)
-                        .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                        .AddPasscode(passcode, Brushes.Black)
+                        .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
+                        .AddCreator(Creator.StudioDice, Brushes.Black)
                         .Build();
                 }
             }
@@ -158,13 +153,13 @@ namespace Yugioh.Sync.Factories
                 .AddAttribute((Draw.Builders.Attribute)cardEntity.Attribute)
                 .AddName(cardEntity.Name, Brushes.Black)
                 .AddLevel((Draw.Builders.Level)cardEntity.Level)
-                //.AddNumber("DUSA-EN053", Brushes.Black)
+                .AddNumber(cardNumber, Brushes.Black)
                 .AddMonsterType(cardEntity.GetDisplayedTypes())
-                .AddDescription(cardEntity.Description, Brushes.Black)
+                .AddDescription(cardEntity.Description, Brushes.Black, true)
                 .AddAtkAndDef(cardEntity.Attack, cardEntity.Defense, Brushes.Black)
-                .AddPasscode(cardEntity.Passcode, Brushes.Black)
-                .AddEditionAndHologram(Edition.First, Brushes.Black)
-                .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                .AddPasscode(passcode, Brushes.Black)
+                .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
+                .AddCreator(Creator.StudioDice, Brushes.Black)
                 .Build();
             }
 
@@ -174,13 +169,13 @@ namespace Yugioh.Sync.Factories
                 .AddAttribute((Draw.Builders.Attribute)cardEntity.Attribute)
                 .AddName(cardEntity.Name, Brushes.Black)
                 .AddLevel((Draw.Builders.Level)cardEntity.Level)
-                //.AddNumber("DUSA-EN053", Brushes.Black)
+                .AddNumber(cardNumber, Brushes.Black)
                 .AddMonsterType(cardEntity.GetDisplayedTypes())
                 .AddDescription(cardEntity.Description, Brushes.Black)
                 .AddAtkAndDef(cardEntity.Attack, cardEntity.Defense, Brushes.Black)
-                .AddPasscode(cardEntity.Passcode, Brushes.Black)
-                .AddEditionAndHologram(Edition.First, Brushes.Black)
-                .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                .AddPasscode(passcode, Brushes.Black)
+                .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
+                .AddCreator(Creator.StudioDice, Brushes.Black)
                 .Build();
             }
 
@@ -190,13 +185,13 @@ namespace Yugioh.Sync.Factories
                 .AddAttribute((Draw.Builders.Attribute)cardEntity.Attribute)
                 .AddName(cardEntity.Name, Brushes.Black)
                 .AddLevel((Draw.Builders.Level)cardEntity.Level)
-                //.AddNumber("DUSA-EN053", Brushes.Black)
+                .AddNumber(cardNumber, Brushes.Black)
                 .AddMonsterType(cardEntity.GetDisplayedTypes())
-                .AddDescription(cardEntity.Description, Brushes.Black)
+                .AddDescription(cardEntity.Description, Brushes.Black, true)
                 .AddAtkAndDef(cardEntity.Attack, cardEntity.Defense, Brushes.Black)
-                .AddPasscode(cardEntity.Passcode, Brushes.Black)
-                .AddEditionAndHologram(Edition.First, Brushes.Black)
-                .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                .AddPasscode(passcode, Brushes.Black)
+                .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
+                .AddCreator(Creator.StudioDice, Brushes.Black)
                 .Build();
             }
 
@@ -206,13 +201,13 @@ namespace Yugioh.Sync.Factories
                 .AddAttribute((Draw.Builders.Attribute)cardEntity.Attribute)
                 .AddName(cardEntity.Name, Brushes.White)
                 .AddRank((Draw.Builders.Rank)cardEntity.Rank)
-                //.AddNumber("DUSA-EN053", Brushes.Black)
+                .AddNumber(cardNumber, Brushes.Black)
                 .AddMonsterType(cardEntity.GetDisplayedTypes())
-                .AddDescription(cardEntity.Description, Brushes.Black)
+                .AddDescription(cardEntity.Description, Brushes.Black, true)
                 .AddAtkAndDef(cardEntity.Attack, cardEntity.Defense, Brushes.Black)
-                .AddPasscode(cardEntity.Passcode, Brushes.White)
-                .AddEditionAndHologram(Edition.First, Brushes.White)
-                .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.White)
+                .AddPasscode(passcode, Brushes.White)
+                .AddEditionAndHologram(Edition.Unlimited, Brushes.White)
+                .AddCreator(Creator.StudioDice, Brushes.White)
                 .Build();
             }
 
@@ -220,15 +215,15 @@ namespace Yugioh.Sync.Factories
             {
                 return new CardBuilder(_resourceRepository, Frame.Link, artworkEntity.Image)
                 .AddAttribute((Draw.Builders.Attribute)cardEntity.Attribute)
-                .AddName(cardEntity.Name, Brushes.Black)
-                //.AddNumber("DUSA-EN053", Brushes.Black)
+                .AddName(cardEntity.Name, Brushes.White)
+                .AddNumber(cardNumber, Brushes.Black)
                 .AddMonsterType(cardEntity.GetDisplayedTypes())
-                .AddDescription(cardEntity.Description, Brushes.Black)
+                .AddDescription(cardEntity.Description, Brushes.Black, true)
                 .AddAtkAndLinkRating(cardEntity.Attack, (int)cardEntity.LinkRating, Brushes.Black)
                 .AddLinkArrows((Draw.Builders.LinkArrows)cardEntity.LinkArrows)
-                .AddPasscode(cardEntity.Passcode, Brushes.Black)
-                .AddEditionAndHologram(Edition.First, Brushes.Black)
-                .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                .AddPasscode(passcode, Brushes.Black)
+                .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
+                .AddCreator(Creator.StudioDice, Brushes.Black)
                 .Build();
             }
 
@@ -238,13 +233,13 @@ namespace Yugioh.Sync.Factories
                 .AddAttribute((Draw.Builders.Attribute)cardEntity.Attribute)
                 .AddName(cardEntity.Name, Brushes.Black)
                 .AddLevel((Draw.Builders.Level)cardEntity.Level)
-                //.AddNumber("DUSA-EN053", Brushes.Black)
+                .AddNumber(cardNumber, Brushes.Black)
                 .AddMonsterType(cardEntity.GetDisplayedTypes())
                 .AddDescription(cardEntity.Description, Brushes.Black)
                 .AddAtkAndDef(cardEntity.Attack, cardEntity.Defense, Brushes.Black)
-                .AddPasscode(cardEntity.Passcode, Brushes.Black)
-                .AddEditionAndHologram(Edition.First, Brushes.Black)
-                .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                .AddPasscode(passcode, Brushes.Black)
+                .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
+                .AddCreator(Creator.StudioDice, Brushes.Black)
                 .Build();
             }
 
@@ -254,13 +249,13 @@ namespace Yugioh.Sync.Factories
                 .AddAttribute((Draw.Builders.Attribute)cardEntity.Attribute)
                 .AddName(cardEntity.Name, Brushes.Black)
                 .AddLevel((Draw.Builders.Level)cardEntity.Level)
-                //.AddNumber("DUSA-EN053", Brushes.Black)
+                .AddNumber(cardNumber, Brushes.Black)
                 .AddMonsterType(cardEntity.GetDisplayedTypes())
                 .AddDescription(cardEntity.Description, Brushes.Black)
                 .AddAtkAndDef(cardEntity.Attack, cardEntity.Defense, Brushes.Black)
-                .AddPasscode(cardEntity.Passcode, Brushes.Black)
-                .AddEditionAndHologram(Edition.First, Brushes.Black)
-                .AddCreator("1996 KAZUKI TAKAHASHI", Brushes.Black)
+                .AddPasscode(passcode, Brushes.Black)
+                .AddEditionAndHologram(Edition.Unlimited, Brushes.Black)
+                .AddCreator(Creator.StudioDice, Brushes.Black)
                 .Build();
             }
 

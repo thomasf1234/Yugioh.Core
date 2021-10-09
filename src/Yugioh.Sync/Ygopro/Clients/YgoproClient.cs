@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Yugioh.Sync.Ygopro.Entities;
 using Yugioh.Sync.Ygopro.Responses;
 
 namespace Yugioh.Sync.Ygopro.Clients
@@ -32,6 +34,23 @@ namespace Yugioh.Sync.Ygopro.Clients
             _cachePath = cachePath;
         }
 
+        public async Task<CardSetInfoEntity> GetCardSetInfoAsync(string cardNumber)
+        {
+            string url = $"{BaseUrl}/api/{_apiVersion}/cardsetsinfo.php?setcode={cardNumber}";
+            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(url);
+            HttpStatusCode httpStatusCode = httpResponseMessage.StatusCode;
+
+            switch (httpStatusCode)
+            {
+                case HttpStatusCode.OK:
+                    var responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
+
+                    return JsonConvert.DeserializeObject<CardSetInfoEntity>(responseJson);
+                default:
+                    throw new Exception($"Received response code: {httpStatusCode}");
+            }
+        }
+
         public async Task<GetCardsResponse> GetCardsAsync()
         {
             string url = $"{BaseUrl}/api/{_apiVersion}/cardinfo.php";
@@ -49,11 +68,28 @@ namespace Yugioh.Sync.Ygopro.Clients
             }
         }
 
+        public async Task<List<CardSetEntity>> GetCardSetsAsync()
+        {
+            string url = $"{BaseUrl}/api/{_apiVersion}/cardsets.php";
+            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(url);
+            HttpStatusCode httpStatusCode = httpResponseMessage.StatusCode;
+
+            switch (httpStatusCode)
+            {
+                case HttpStatusCode.OK:
+                    var responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
+
+                    return JsonConvert.DeserializeObject<List<CardSetEntity>>(responseJson);
+                default:
+                    throw new Exception($"Received response code: {httpStatusCode}");
+            }
+        }
+
         public async Task<Image> GetImageAsync(int imageId)
         {
             var url = $"{ArtworkUrl}/{imageId}.jpg";
-            var rawFilePath = Path.Combine(_cachePath, $"Artworks/Raw/{imageId}.jpg");
-            var formattedFilePath = Path.Combine(_cachePath, $"Artworks/Formatted/{imageId}.jpg");
+            var rawFilePath = Path.Combine(_cachePath, $"Ygopro\\Artworks\\Raw\\{imageId}.jpg");
+            var formattedFilePath = Path.Combine(_cachePath, $"Ygopro\\Artworks\\Formatted\\{imageId}.jpg");
 
             // Download raw file if we don't have it
             if (!File.Exists(rawFilePath))

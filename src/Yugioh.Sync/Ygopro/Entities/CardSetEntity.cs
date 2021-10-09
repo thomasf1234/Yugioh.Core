@@ -1,5 +1,6 @@
 ﻿
 using Newtonsoft.Json;
+using System;
 
 namespace Yugioh.Sync.Ygopro.Entities
 {
@@ -9,11 +10,9 @@ namespace Yugioh.Sync.Ygopro.Entities
         public string SetName { get; set; }
         [JsonProperty("set_code")]
         public string SetCode { get; set; }
-        [JsonProperty("set_rarity")]
-        public string SetRarity { get; set; }
-        [JsonProperty("set_rarity_code")]
-        public string SetRarityCode { get; set; }
-        [JsonProperty("set_price")]
-        public string SetPrice { get; set; }
+        [JsonProperty("num_of_cards")]
+        public int NumberOfCards { get; set; }
+        [JsonProperty("tcg_date")]
+        public DateTime TcgDate { get; set; }
     }
 }

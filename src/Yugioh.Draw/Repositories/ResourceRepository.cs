@@ -60,11 +60,6 @@ namespace Yugioh.Draw.Repositories
         // https://www.cardmaker.net/forums/topic/308603-fonts-for-yu-gi-oh-card-making-with-multilingual-support/
         public FontFamily GetFontFamily(string name)
         {
-            if (name == "Yu-Gi-Oh! Matrix Small Caps 1")
-            {
-                ;
-            }
-            // Caching - strange bug were the font familiy fails to be found on subsequent calls (2-4)
             if (_fontFamilities.ContainsKey(name))
             {
                 return _fontFamilities[name];

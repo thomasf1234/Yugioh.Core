@@ -513,36 +513,6 @@ namespace Yugioh.Draw.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] FRAME__PENDULUM_EGYPTIAN_GOD_BLUE {
-            get {
-                object obj = ResourceManager.GetObject("FRAME__PENDULUM_EGYPTIAN_GOD_BLUE", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] FRAME__PENDULUM_EGYPTIAN_GOD_RED {
-            get {
-                object obj = ResourceManager.GetObject("FRAME__PENDULUM_EGYPTIAN_GOD_RED", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] FRAME__PENDULUM_EGYPTIAN_GOD_YELLOW {
-            get {
-                object obj = ResourceManager.GetObject("FRAME__PENDULUM_EGYPTIAN_GOD_YELLOW", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] FRAME__PENDULUM_FUSION {
             get {
                 object obj = ResourceManager.GetObject("FRAME__PENDULUM_FUSION", resourceCulture);
@@ -573,79 +543,9 @@ namespace Yugioh.Draw.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] FRAME__PENDULUM_SACRED_BEAST_BLUE {
-            get {
-                object obj = ResourceManager.GetObject("FRAME__PENDULUM_SACRED_BEAST_BLUE", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] FRAME__PENDULUM_SACRED_BEAST_RED {
-            get {
-                object obj = ResourceManager.GetObject("FRAME__PENDULUM_SACRED_BEAST_RED", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] FRAME__PENDULUM_SACRED_BEAST_YELLOW {
-            get {
-                object obj = ResourceManager.GetObject("FRAME__PENDULUM_SACRED_BEAST_YELLOW", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] FRAME__PENDULUM_SPELL {
-            get {
-                object obj = ResourceManager.GetObject("FRAME__PENDULUM_SPELL", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] FRAME__PENDULUM_SYNCHRO {
             get {
                 object obj = ResourceManager.GetObject("FRAME__PENDULUM_SYNCHRO", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] FRAME__PENDULUM_TOKEN {
-            get {
-                object obj = ResourceManager.GetObject("FRAME__PENDULUM_TOKEN", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] FRAME__PENDULUM_TRAP {
-            get {
-                object obj = ResourceManager.GetObject("FRAME__PENDULUM_TRAP", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] FRAME__PENDULUM_WICKED_BEAST {
-            get {
-                object obj = ResourceManager.GetObject("FRAME__PENDULUM_WICKED_BEAST", resourceCulture);
                 return ((byte[])(obj));
             }
         }

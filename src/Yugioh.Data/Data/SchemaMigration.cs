@@ -34,32 +34,44 @@ CREATE TABLE IF NOT EXISTS Card (
   Abilities TINYINT, -- Binary [Tuner][DarkTuner][Toon][Union][Spirit][Gemini][Flip]
   Attack VARCHAR, 
   Defense VARCHAR, 
-  Description VARCHAR NOT NULL,
-  Passcode CHAR(8)
+  Description VARCHAR NOT NULL
 );
 ",
 
 @"
 CREATE TABLE IF NOT EXISTS Artwork (
-  ArtworkId integer PRIMARY KEY NOT NULL,
-  CardId integer NOT NULL,
-  Alternate BOOLEAN NOT NULL,
-  Image BLOB,
-  FOREIGN KEY(CardId) REFERENCES Card(CardId)
-);
-"//,
-
-/*@"
-CREATE TABLE IF NOT EXISTS CardSet (
-  Number VARCHAR PRIMARY KEY NOT NULL, 
   CardId INTEGER NOT NULL,
-  ArtworkId INTEGER NOT NULL, 
-  Rarity TINYINT, -- Binary [GR][SecretRare][UltimateRare][]
+  Ordinal INTEGER NOT NULL,
+  Image BLOB,
   FOREIGN KEY(CardId) REFERENCES Card(CardId),
-  FOREIGN KEY(ArtworkId) REFERENCES Artwork(ArtworkId)
+  UNIQUE(CardId, Ordinal) ON CONFLICT REPLACE
 );
-"*/
-        };
+",
+
+@"
+CREATE TABLE IF NOT EXISTS Product (
+  ProductId VARCHAR PRIMARY KEY NOT NULL, 
+  Title VARCHAR NOT NULL,
+  SetSize INTEGER NOT NULL,
+  --Image BLOB,
+  LaunchDate DATETIME
+);
+",
+
+@"
+CREATE TABLE IF NOT EXISTS ProductCard (
+    Code VARCHAR PRIMARY KEY NOT NULL,
+    ProductId VARCHAR NOT NULL, 
+    CardId INTEGER NOT NULL,
+    ArtworkOrdinal INTEGER, --NOT NULL, 
+    Rarity VARCHAR NOT NULL,
+    --Rarity TINYINT, -- Binary [GR][SecretRare][UltimateRare][]
+    Passcode CHAR(8),
+    FOREIGN KEY(ProductId) REFERENCES Product(ProductId),
+    FOREIGN KEY(CardId) REFERENCES Card(CardId)
+);
+"
+    };
 
             using (var transaction = _sqliteConnection.BeginTransaction())
             {

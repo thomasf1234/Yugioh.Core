@@ -83,6 +83,16 @@ namespace Yugioh.Draw.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] MatrixRegular_Regular {
+            get {
+                object obj = ResourceManager.GetObject("MatrixRegular_Regular", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] RoGSanSrfStd_Bd {
             get {
                 object obj = ResourceManager.GetObject("RoGSanSrfStd_Bd", resourceCulture);
