@@ -70,6 +70,14 @@ CREATE TABLE IF NOT EXISTS ProductCard (
     FOREIGN KEY(ProductId) REFERENCES Product(ProductId),
     FOREIGN KEY(CardId) REFERENCES Card(CardId)
 );
+",
+
+@"
+CREATE TABLE IF NOT EXISTS CardImage (
+    Code VARCHAR NOT NULL,
+    Image BLOB NOT NULL,
+    FOREIGN KEY(Code) REFERENCES ProductCard(Code)
+);
 "
     };
 

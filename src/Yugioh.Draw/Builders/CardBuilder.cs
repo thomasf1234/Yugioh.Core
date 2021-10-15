@@ -34,7 +34,7 @@ namespace Yugioh.Draw.Builders
         PendulumSynchro,
         PendulumToken,
         PendulumTrap,
-        PendulumWickedBeast,
+        PendulumWickedGod,
         PendulumXyz,
         Ritual,
         SacredBeastBlue,
@@ -44,7 +44,7 @@ namespace Yugioh.Draw.Builders
         Synchro,
         Token,
         Trap,
-        WickedBeast,
+        WickedGod,
         Xyz
     }
 
@@ -76,7 +76,8 @@ namespace Yugioh.Draw.Builders
         Wind = 6,
         Laugh = 7,
         Spell = 8,
-        Trap = 9
+        Trap = 9,
+        DarkDivine = 10
     }
 
     public enum Level

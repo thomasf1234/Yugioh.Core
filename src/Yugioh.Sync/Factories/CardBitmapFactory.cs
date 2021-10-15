@@ -93,7 +93,7 @@ namespace Yugioh.Sync.Factories
                 {
                     return new CardBuilder(_resourceRepository, Frame.PendulumXyz, artworkEntity.Image)
                         .AddAttribute((Draw.Builders.Attribute)cardEntity.Attribute)
-                        .AddName(cardEntity.Name, Brushes.Black)
+                        .AddName(cardEntity.Name, Brushes.White)
                         .AddRank((Draw.Builders.Rank)cardEntity.Rank)
                         .AddPendulumScale((Draw.Builders.PendulumScale)cardEntity.PendulumScale)
                         .AddNumber(cardNumber, Brushes.Black)
@@ -201,7 +201,7 @@ namespace Yugioh.Sync.Factories
                 .AddAttribute((Draw.Builders.Attribute)cardEntity.Attribute)
                 .AddName(cardEntity.Name, Brushes.White)
                 .AddRank((Draw.Builders.Rank)cardEntity.Rank)
-                .AddNumber(cardNumber, Brushes.Black)
+                .AddNumber(cardNumber, Brushes.White)
                 .AddMonsterType(cardEntity.GetDisplayedTypes())
                 .AddDescription(cardEntity.Description, Brushes.Black, true)
                 .AddAtkAndDef(cardEntity.Attack, cardEntity.Defense, Brushes.Black)

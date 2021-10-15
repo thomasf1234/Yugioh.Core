@@ -130,5 +130,52 @@ VALUES (@code,
                 await command.ExecuteNonQueryAsync();
             }           
         }
+
+        public async Task<List<ProductCardEntity>> FindByCardIdAsync(int cardId, SqliteConnection connection, SqliteTransaction transaction)
+        {
+            var productCardEntities = new List<ProductCardEntity>();
+
+            string queryString =
+            $@"
+SELECT {nameof(ProductCardEntity.Code)}, 
+       {nameof(ProductCardEntity.ProductId)},
+       {nameof(ProductCardEntity.ArtworkOrdinal)},
+       {nameof(ProductCardEntity.Rarity)},
+       {nameof(ProductCardEntity.Passcode)}
+FROM {TableConstants.ProductCard} 
+WHERE {nameof(ProductCardEntity.CardId)} = @cardId
+ORDER BY {nameof(ProductCardEntity.Code)} ASC;";
+
+            using (var command = new SqliteCommand(queryString, connection, transaction))
+            {
+                command.Parameters.AddWithValue("@cardId", cardId);
+
+                using (SqliteDataReader reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        string code = reader.GetString(0);
+                        string productId = reader.GetString(1);
+                        int artworkOrdinal = reader.GetInt32(2);
+                        string rarity = reader.GetString(3);
+                        string passcode = reader[nameof(ProductCardEntity.Passcode)] == DBNull.Value ? null : reader.GetString(reader.GetOrdinal(nameof(ProductCardEntity.Passcode)));
+
+                        var productCardEntity = new ProductCardEntity()
+                        {
+                            Code = code,
+                            ProductId = productId,
+                            CardId = cardId,
+                            ArtworkOrdinal = artworkOrdinal,
+                            Rarity = rarity,
+                            Passcode = passcode
+                        };
+
+                        productCardEntities.Add(productCardEntity);
+                    }
+                }
+            }
+
+            return productCardEntities;
+        }
     }
 }

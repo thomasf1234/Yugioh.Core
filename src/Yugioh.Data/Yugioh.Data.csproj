@@ -141,12 +141,15 @@
     <Compile Include="Data\SchemaMigration.cs" />
     <Compile Include="Entities\ArtworkEntity.cs" />
     <Compile Include="Entities\CardEntity.cs" />
+    <Compile Include="Entities\CardImageEntity.cs" />
     <Compile Include="Entities\ProductCardEntity.cs" />
     <Compile Include="Entities\ProductEntity.cs" />
     <Compile Include="Extensions\SqliteExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CardImageRepository.cs" />
     <Compile Include="Repositories\CardRepository.cs" />
     <Compile Include="Repositories\ArtworkRepository.cs" />
+    <Compile Include="Repositories\ICardImageRepository.cs" />
     <Compile Include="Repositories\IProductCardRepository.cs" />
     <Compile Include="Repositories\ProductCardRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />

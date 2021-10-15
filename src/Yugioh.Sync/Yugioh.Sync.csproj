@@ -106,8 +106,10 @@
     <Compile Include="Konami\Pages\CardListPage.cs" />
     <Compile Include="Konami\Pages\ProductPage.cs" />
     <Compile Include="Konami\Pages\CardPage.cs" />
+    <Compile Include="Presenters\CardPrintPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ImageUtil.cs" />
     <Compile Include="Utils\StringUtil.cs" />
     <Compile Include="Ygopro\Clients\IYgoproClient.cs" />
     <Compile Include="Ygopro\Clients\YgoproClient.cs" />

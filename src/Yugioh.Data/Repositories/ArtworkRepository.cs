@@ -2,6 +2,7 @@
 using System.Data;
 using System.Drawing;
 using System.Threading.Tasks;
+using Yugioh.Data.Constants;
 using Yugioh.Data.Entities;
 using Yugioh.Data.Utils;
 
@@ -13,7 +14,8 @@ namespace Yugioh.Data.Repositories
         {
             string queryString =
             $@"
-SELECT COUNT(*) FROM Artwork 
+SELECT COUNT(*) 
+FROM {TableConstants.Artwork} 
 WHERE {nameof(ArtworkEntity.CardId)} = @cardId
 AND {nameof(ArtworkEntity.Ordinal)} = @ordinal;";
 
@@ -33,7 +35,7 @@ AND {nameof(ArtworkEntity.Ordinal)} = @ordinal;";
             string queryString =
             $@"
 SELECT {nameof(ArtworkEntity.Image)}
-FROM Artwork 
+FROM {TableConstants.Artwork} 
 WHERE {nameof(ArtworkEntity.CardId)} = @cardId
 AND {nameof(ArtworkEntity.Ordinal)} = @ordinal
 LIMIT 1;";
@@ -51,7 +53,7 @@ LIMIT 1;";
 
                         using (var readStream = reader.GetStream(0))
                         {
-                            image = Image.FromStream(readStream);
+                            image = new Bitmap(Image.FromStream(readStream));
                         }
 
                         return new ArtworkEntity()
@@ -73,10 +75,12 @@ LIMIT 1;";
         {
             string queryString =
             $@"
-INSERT INTO Artwork ({nameof(ArtworkEntity.CardId)},
-                     {nameof(ArtworkEntity.Ordinal)},
-                     {nameof(ArtworkEntity.Image)}
-                     )
+INSERT INTO {TableConstants.Artwork} 
+(
+{nameof(ArtworkEntity.CardId)},
+{nameof(ArtworkEntity.Ordinal)},
+{nameof(ArtworkEntity.Image)}
+)
 VALUES (@cardId,
         @ordinal,
         @image);";

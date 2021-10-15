@@ -6,5 +6,6 @@
         public const string Artwork = "Artwork";
         public const string Product = "Product";
         public const string ProductCard = "ProductCard";
+        public const string CardImage = "CardImage";
     }
 }
